@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import useCurrentUser from "@/lib/useCurrentUser";
 import PageHeader from "@/components/PageHeader";
+import AccessDenied from "@/components/AccessDenied";
 import DataTable from "@/components/DataTable";
 import StatusBadge from "@/components/StatusBadge";
 import ResidentDetail from "@/components/residents/ResidentDetail";
@@ -20,7 +21,7 @@ export default function Residents() {
     setLoading(false);
   }
 
-  if (!isInternal) return <div className="text-center py-12 text-muted-foreground">Access restricted.</div>;
+  if (!isInternal) return <AccessDenied message="Resident records are restricted to internal housing staff only." />;
 
   const columns = [
     { header: "Name", cell: r => `${r.first_name} ${r.last_name}` },

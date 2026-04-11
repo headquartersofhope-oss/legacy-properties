@@ -10,7 +10,8 @@
         "housing_staff",
         "referral_partner"
       ],
-      "title": "Role"
+      "title": "Role",
+      "default": "housing_staff"
     },
     "referring_organization_id": {
       "type": "string",

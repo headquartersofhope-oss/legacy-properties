@@ -12,7 +12,7 @@ import { Plus } from "lucide-react";
 const defaultForm = { site_name: '', address: '', city: '', state: '', zip: '', site_type: 'transitional', gender_restriction: 'none', capacity: '', status: 'active', house_manager: '', phone: '', notes: '' };
 
 export default function Sites() {
-  const { isAdmin, isManager } = useCurrentUser();
+  const { isAdmin, isManager, isInternal } = useCurrentUser();
   const [sites, setSites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);

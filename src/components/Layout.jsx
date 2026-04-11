@@ -46,8 +46,9 @@ export default function Layout() {
     );
   }
 
-  const navItems = isPartner ? partnerNav : internalNav;
-  const filteredNav = isInternal ? navItems : navItems;
+  // Security: only show nav items the user's role is entitled to.
+  // Unknown / unauthenticated roles get an empty nav.
+  const filteredNav = isPartner ? partnerNav : (isInternal ? internalNav : []);
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">

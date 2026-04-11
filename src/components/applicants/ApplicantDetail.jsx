@@ -32,6 +32,14 @@ export default function ApplicantDetail({ open, onClose, applicant, onUpdated })
 
   async function convertToResident() {
     setSaving(true);
+    // Duplicate guard: check if a resident already exists for this applicant
+    const existingResidents = await base44.entities.HousingResident.filter({ applicant_id: applicant.id });
+    if (existingResidents.length > 0) {
+      await base44.entities.HousingApplicant.update(applicant.id, { applicant_status: 'placed', intake_status: 'completed' });
+      setSaving(false);
+      onUpdated();
+      return;
+    }
     const selectedBed = beds.find(b => b.id === form.assigned_bed_id);
     const selectedRoom = rooms.find(r => r.id === selectedBed?.room_id);
     const selectedSite = sites.find(s => s.id === selectedBed?.site_id);

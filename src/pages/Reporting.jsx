@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import useCurrentUser from "@/lib/useCurrentUser";
 import PageHeader from "@/components/PageHeader";
+import AccessDenied from "@/components/AccessDenied";
 import StatCard from "@/components/StatCard";
 import { FileText, Users, UserCheck, BedDouble, AlertTriangle, ShieldCheck, DollarSign, Building, Clock } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
@@ -13,7 +14,7 @@ export default function Reporting() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => { if (isInternal) loadData(); else setLoading(false); }, [isInternal]);
 
   async function loadData() {
     const [referrals, residents, beds, incidents, compliance, fees, orgs] = await Promise.all([
@@ -76,7 +77,7 @@ export default function Reporting() {
     setLoading(false);
   }
 
-  if (!isInternal) return <div className="text-center py-12 text-muted-foreground">Access restricted.</div>;
+  if (!isInternal) return <AccessDenied message="Reporting is restricted to internal housing staff only." />;
 
   if (loading) return <div className="flex justify-center py-12"><div className="w-6 h-6 border-3 border-primary/30 border-t-primary rounded-full animate-spin" /></div>;
 

@@ -31,7 +31,7 @@ export default function Availability() {
   });
 
   const totalAvailable = beds.filter(b => b.bed_status === 'available').length;
-  const totalBeds = beds.length;
+  // NOTE: totalBeds intentionally not shown to external partners — only availability count is exposed.
 
   return (
     <div>
@@ -44,7 +44,7 @@ export default function Availability() {
           </div>
           <div>
             <p className="text-3xl font-bold text-foreground">{totalAvailable}</p>
-            <p className="text-sm text-muted-foreground">beds available out of {totalBeds} total</p>
+            <p className="text-sm text-muted-foreground">beds currently available across all active programs</p>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@ export default function Availability() {
                 </div>
                 <div className="mt-3 flex items-baseline gap-1">
                   <span className="text-xl font-bold text-foreground">{site.available}</span>
-                  <span className="text-xs text-muted-foreground">/ {site.total} beds available</span>
+                  <span className="text-xs text-muted-foreground">bed{site.available !== 1 ? 's' : ''} available</span>
                 </div>
                 {site.available === 0 && (
                   <p className="text-xs text-orange-600 mt-1 font-medium">Waitlist may be available</p>

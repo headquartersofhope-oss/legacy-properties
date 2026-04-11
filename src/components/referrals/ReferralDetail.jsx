@@ -11,9 +11,13 @@ export default function ReferralDetail({ open, onClose, referral, isInternal, is
   const [partnerNotes, setPartnerNotes] = useState(referral?.partner_visible_notes || '');
   const [saving, setSaving] = useState(false);
 
-  async function updateStatus(newStatus) {
+  async function updateStatus(newStatus, { fromPartner = false } = {}) {
     setSaving(true);
-    const payload = { referral_status: newStatus, internal_review_notes: internalNotes, partner_visible_notes: partnerNotes };
+    // Partners can ONLY update referral_status and partner_visible_notes.
+    // They must never be able to write to internal_review_notes.
+    const payload = fromPartner
+      ? { referral_status: newStatus, partner_visible_notes: partnerNotes }
+      : { referral_status: newStatus, internal_review_notes: internalNotes, partner_visible_notes: partnerNotes };
     if (['approved', 'denied', 'waitlisted'].includes(newStatus)) {
       payload.decision_date = new Date().toISOString();
     }
@@ -24,6 +28,15 @@ export default function ReferralDetail({ open, onClose, referral, isInternal, is
 
   async function convertToApplicant() {
     setSaving(true);
+    // Duplicate guard: check if an applicant already exists for this referral
+    const existing = await base44.entities.HousingApplicant.filter({ referral_id: referral.id });
+    if (existing.length > 0) {
+      // Already converted — just update referral status to admitted
+      await base44.entities.Referral.update(referral.id, { referral_status: 'admitted' });
+      setSaving(false);
+      onUpdated();
+      return;
+    }
     await base44.entities.HousingApplicant.create({
       referral_id: referral.id,
       first_name: referral.applicant_first_name,
@@ -128,7 +141,7 @@ export default function ReferralDetail({ open, onClose, referral, isInternal, is
             <div className="space-y-3 pt-3 border-t">
               <h3 className="text-sm font-semibold">Additional Information Requested</h3>
               <FormField label="Response Notes" name="partner_notes" value={partnerNotes} onChange={(_, v) => setPartnerNotes(v)} type="textarea" />
-              <Button size="sm" onClick={() => updateStatus('submitted')} disabled={saving}>
+              <Button size="sm" onClick={() => updateStatus('submitted', { fromPartner: true })} disabled={saving}>
                 Resubmit with Info
               </Button>
             </div>

@@ -21,7 +21,7 @@ export default function Dashboard() {
 
   async function loadStats() {
     if (!user) return;
-    
+
     if (isPartner) {
       const referrals = await base44.entities.Referral.filter({ referring_user_email: user.email });
       setStats({
@@ -33,7 +33,7 @@ export default function Dashboard() {
         denied: referrals.filter(r => r.referral_status === 'denied').length,
         waitlisted: referrals.filter(r => r.referral_status === 'waitlisted').length,
       });
-    } else {
+    } else if (isInternal) {
       const [sites, rooms, beds, referrals, residents, incidents, compliance, fees] = await Promise.all([
         base44.entities.HousingSite.list(),
         base44.entities.Room.list(),
@@ -71,6 +71,9 @@ export default function Dashboard() {
         complianceDue: compliance.filter(c => c.follow_up_needed).length,
         overdueFees: fees.filter(f => f.fee_status === 'overdue').length,
       });
+    } else {
+      // Unknown role — no data loaded
+      setStats({});
     }
     setLoading(false);
   }

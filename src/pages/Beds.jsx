@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 export default function Beds() {
-  const { isAdmin, isManager } = useCurrentUser();
+  const { isAdmin, isManager, isInternal } = useCurrentUser();
+
+  if (!isInternal) return null;
   const [beds, setBeds] = useState([]);
   const [sites, setSites] = useState([]);
   const [rooms, setRooms] = useState([]);

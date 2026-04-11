@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 export default function ReferringOrgs() {
-  const { isAdmin, isManager } = useCurrentUser();
+  const { isAdmin, isManager, isInternal } = useCurrentUser();
+
+  if (!isInternal) return null;
   const [orgs, setOrgs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);

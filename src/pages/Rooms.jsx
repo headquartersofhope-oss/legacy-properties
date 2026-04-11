@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 export default function Rooms() {
-  const { isAdmin, isManager } = useCurrentUser();
+  const { isAdmin, isManager, isInternal } = useCurrentUser();
+
+  if (!isInternal) return null;
   const [rooms, setRooms] = useState([]);
   const [sites, setSites] = useState([]);
   const [loading, setLoading] = useState(true);
