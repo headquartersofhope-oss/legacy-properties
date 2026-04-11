@@ -1,0 +1,94 @@
+{
+  "name": "HousingResident",
+  "type": "object",
+  "properties": {
+    "applicant_id": {
+      "type": "string",
+      "title": "Applicant ID"
+    },
+    "first_name": {
+      "type": "string",
+      "title": "First Name"
+    },
+    "last_name": {
+      "type": "string",
+      "title": "Last Name"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "site_id": {
+      "type": "string",
+      "title": "Site ID"
+    },
+    "site_name": {
+      "type": "string",
+      "title": "Site Name"
+    },
+    "room_id": {
+      "type": "string",
+      "title": "Room ID"
+    },
+    "room_name": {
+      "type": "string",
+      "title": "Room Name"
+    },
+    "bed_id": {
+      "type": "string",
+      "title": "Bed ID"
+    },
+    "bed_label": {
+      "type": "string",
+      "title": "Bed Label"
+    },
+    "move_in_date": {
+      "type": "string",
+      "title": "Move-In Date"
+    },
+    "expected_exit_date": {
+      "type": "string",
+      "title": "Expected Exit Date"
+    },
+    "actual_exit_date": {
+      "type": "string",
+      "title": "Actual Exit Date"
+    },
+    "resident_status": {
+      "type": "string",
+      "enum": [
+        "pending_move_in",
+        "active",
+        "suspended",
+        "exited",
+        "discharged"
+      ],
+      "title": "Resident Status"
+    },
+    "emergency_contact_name": {
+      "type": "string",
+      "title": "Emergency Contact Name"
+    },
+    "emergency_contact_phone": {
+      "type": "string",
+      "title": "Emergency Contact Phone"
+    },
+    "house_rules_signed": {
+      "type": "boolean",
+      "title": "House Rules Signed"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "first_name",
+    "last_name",
+    "resident_status"
+  ]
+}

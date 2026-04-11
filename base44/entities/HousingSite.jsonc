@@ -1,0 +1,80 @@
+{
+  "name": "HousingSite",
+  "type": "object",
+  "properties": {
+    "provider_id": {
+      "type": "string",
+      "title": "Provider ID"
+    },
+    "site_name": {
+      "type": "string",
+      "title": "Site Name"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address"
+    },
+    "city": {
+      "type": "string",
+      "title": "City"
+    },
+    "state": {
+      "type": "string",
+      "title": "State"
+    },
+    "zip": {
+      "type": "string",
+      "title": "ZIP"
+    },
+    "site_type": {
+      "type": "string",
+      "enum": [
+        "transitional",
+        "sober_living",
+        "emergency",
+        "recovery",
+        "other"
+      ],
+      "title": "Site Type"
+    },
+    "gender_restriction": {
+      "type": "string",
+      "enum": [
+        "none",
+        "male_only",
+        "female_only",
+        "family"
+      ],
+      "title": "Gender/Program Restriction"
+    },
+    "capacity": {
+      "type": "number",
+      "title": "Total Capacity"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "under_maintenance"
+      ],
+      "title": "Status"
+    },
+    "house_manager": {
+      "type": "string",
+      "title": "House Manager"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "site_name",
+    "status"
+  ]
+}

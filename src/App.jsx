@@ -5,12 +5,27 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
-// Add page imports here
+import Layout from './components/Layout';
+import Dashboard from './pages/Dashboard';
+import Sites from './pages/Sites';
+import Rooms from './pages/Rooms';
+import Beds from './pages/Beds';
+import Referrals from './pages/Referrals';
+import Applicants from './pages/Applicants';
+import Residents from './pages/Residents';
+import Occupancy from './pages/Occupancy';
+import Documents from './pages/Documents';
+import Incidents from './pages/Incidents';
+import Compliance from './pages/Compliance';
+import Fees from './pages/Fees';
+import ReferringOrgs from './pages/ReferringOrgs';
+import Reporting from './pages/Reporting';
+import Availability from './pages/Availability';
+import Settings from './pages/Settings';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
-  // Show loading spinner while checking app public settings or auth
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
       <div className="fixed inset-0 flex items-center justify-center">
@@ -19,29 +34,41 @@ const AuthenticatedApp = () => {
     );
   }
 
-  // Handle authentication errors
   if (authError) {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
     } else if (authError.type === 'auth_required') {
-      // Redirect to login automatically
       navigateToLogin();
       return null;
     }
   }
 
-  // Render the main app
   return (
     <Routes>
-      {/* Add your page Route elements here */}
-      <Route path="*" element={<PageNotFound />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/sites" element={<Sites />} />
+        <Route path="/rooms" element={<Rooms />} />
+        <Route path="/beds" element={<Beds />} />
+        <Route path="/referrals" element={<Referrals />} />
+        <Route path="/applicants" element={<Applicants />} />
+        <Route path="/residents" element={<Residents />} />
+        <Route path="/occupancy" element={<Occupancy />} />
+        <Route path="/documents" element={<Documents />} />
+        <Route path="/incidents" element={<Incidents />} />
+        <Route path="/compliance" element={<Compliance />} />
+        <Route path="/fees" element={<Fees />} />
+        <Route path="/referring-orgs" element={<ReferringOrgs />} />
+        <Route path="/reporting" element={<Reporting />} />
+        <Route path="/availability" element={<Availability />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Route>
     </Routes>
   );
 };
 
-
 function App() {
-
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>

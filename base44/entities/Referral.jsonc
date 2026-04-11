@@ -1,0 +1,115 @@
+{
+  "name": "Referral",
+  "type": "object",
+  "properties": {
+    "external_referral_id": {
+      "type": "string",
+      "title": "External Referral ID"
+    },
+    "referring_organization_id": {
+      "type": "string",
+      "title": "Referring Organization ID"
+    },
+    "referring_organization_name": {
+      "type": "string",
+      "title": "Referring Organization Name"
+    },
+    "referring_user_email": {
+      "type": "string",
+      "title": "Referring User Email"
+    },
+    "applicant_first_name": {
+      "type": "string",
+      "title": "Applicant First Name"
+    },
+    "applicant_last_name": {
+      "type": "string",
+      "title": "Applicant Last Name"
+    },
+    "applicant_dob": {
+      "type": "string",
+      "title": "Date of Birth"
+    },
+    "applicant_phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "applicant_email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "current_housing_situation": {
+      "type": "string",
+      "title": "Current Housing Situation"
+    },
+    "employment_income_summary": {
+      "type": "string",
+      "title": "Employment/Income Summary"
+    },
+    "priority_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "title": "Priority Level"
+    },
+    "population_program_fit": {
+      "type": "string",
+      "title": "Population/Program Fit"
+    },
+    "consent_status": {
+      "type": "string",
+      "enum": [
+        "not_obtained",
+        "obtained",
+        "declined"
+      ],
+      "title": "Consent Status"
+    },
+    "referral_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "submitted",
+        "received",
+        "under_review",
+        "more_information_requested",
+        "approved",
+        "denied",
+        "waitlisted",
+        "withdrawn",
+        "admitted",
+        "closed"
+      ],
+      "title": "Referral Status"
+    },
+    "requested_site": {
+      "type": "string",
+      "title": "Requested Site/Program"
+    },
+    "internal_review_notes": {
+      "type": "string",
+      "title": "Internal Review Notes"
+    },
+    "partner_visible_notes": {
+      "type": "string",
+      "title": "Partner Visible Notes"
+    },
+    "decision_date": {
+      "type": "string",
+      "title": "Decision Date"
+    },
+    "submitted_at": {
+      "type": "string",
+      "title": "Submitted At"
+    }
+  },
+  "required": [
+    "applicant_first_name",
+    "applicant_last_name",
+    "referral_status"
+  ]
+}

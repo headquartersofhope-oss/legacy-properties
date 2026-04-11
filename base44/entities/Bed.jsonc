@@ -1,0 +1,74 @@
+{
+  "name": "Bed",
+  "type": "object",
+  "properties": {
+    "site_id": {
+      "type": "string",
+      "title": "Site ID"
+    },
+    "site_name": {
+      "type": "string",
+      "title": "Site Name"
+    },
+    "room_id": {
+      "type": "string",
+      "title": "Room ID"
+    },
+    "room_name": {
+      "type": "string",
+      "title": "Room Name"
+    },
+    "bed_label": {
+      "type": "string",
+      "title": "Bed Label"
+    },
+    "bed_status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "occupied",
+        "reserved",
+        "out_of_service"
+      ],
+      "title": "Bed Status"
+    },
+    "bed_type": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "bunk_top",
+        "bunk_bottom",
+        "single",
+        "double"
+      ],
+      "title": "Bed Type"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "title": "Active Status"
+    },
+    "restriction_tags": {
+      "type": "string",
+      "title": "Restriction Tags"
+    },
+    "current_resident_id": {
+      "type": "string",
+      "title": "Current Resident ID"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "site_id",
+    "room_id",
+    "bed_label",
+    "bed_status",
+    "status"
+  ]
+}

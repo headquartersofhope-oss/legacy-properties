@@ -1,0 +1,49 @@
+{
+  "name": "WaitlistEntry",
+  "type": "object",
+  "properties": {
+    "referral_id": {
+      "type": "string",
+      "title": "Referral ID"
+    },
+    "applicant_name": {
+      "type": "string",
+      "title": "Applicant Name"
+    },
+    "site_preference": {
+      "type": "string",
+      "title": "Site/Program Preference"
+    },
+    "waitlist_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "offered",
+        "accepted",
+        "declined",
+        "removed",
+        "expired"
+      ],
+      "title": "Waitlist Status"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "title": "Priority"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "referral_id",
+    "applicant_name",
+    "waitlist_status"
+  ]
+}

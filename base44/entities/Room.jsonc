@@ -1,0 +1,40 @@
+{
+  "name": "Room",
+  "type": "object",
+  "properties": {
+    "site_id": {
+      "type": "string",
+      "title": "Site ID"
+    },
+    "site_name": {
+      "type": "string",
+      "title": "Site Name"
+    },
+    "room_name": {
+      "type": "string",
+      "title": "Room Name/Number"
+    },
+    "capacity": {
+      "type": "number",
+      "title": "Capacity"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "under_maintenance"
+      ],
+      "title": "Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "site_id",
+    "room_name",
+    "status"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "name": "IncidentReport",
+  "type": "object",
+  "properties": {
+    "housing_resident_id": {
+      "type": "string",
+      "title": "Resident ID"
+    },
+    "resident_name": {
+      "type": "string",
+      "title": "Resident Name"
+    },
+    "site_id": {
+      "type": "string",
+      "title": "Site ID"
+    },
+    "site_name": {
+      "type": "string",
+      "title": "Site Name"
+    },
+    "incident_date": {
+      "type": "string",
+      "title": "Incident Date"
+    },
+    "incident_type": {
+      "type": "string",
+      "enum": [
+        "behavioral",
+        "property_damage",
+        "substance_use",
+        "violence",
+        "noise",
+        "unauthorized_guest",
+        "curfew_violation",
+        "other"
+      ],
+      "title": "Incident Type"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "title": "Severity"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "action_taken": {
+      "type": "string",
+      "title": "Action Taken"
+    },
+    "internal_only": {
+      "type": "boolean",
+      "title": "Internal Only"
+    },
+    "follow_up_status": {
+      "type": "string",
+      "enum": [
+        "none_needed",
+        "pending",
+        "in_progress",
+        "completed"
+      ],
+      "title": "Follow-up Status"
+    }
+  },
+  "required": [
+    "site_id",
+    "incident_date",
+    "incident_type",
+    "severity"
+  ]
+}

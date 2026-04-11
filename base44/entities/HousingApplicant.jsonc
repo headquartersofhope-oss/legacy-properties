@@ -1,0 +1,88 @@
+{
+  "name": "HousingApplicant",
+  "type": "object",
+  "properties": {
+    "referral_id": {
+      "type": "string",
+      "title": "Referral ID"
+    },
+    "first_name": {
+      "type": "string",
+      "title": "First Name"
+    },
+    "last_name": {
+      "type": "string",
+      "title": "Last Name"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "dob": {
+      "type": "string",
+      "title": "Date of Birth"
+    },
+    "intake_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "title": "Intake Status"
+    },
+    "applicant_status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "screening",
+        "eligible",
+        "ineligible",
+        "ready_for_placement",
+        "placed"
+      ],
+      "title": "Applicant Status"
+    },
+    "documents_status": {
+      "type": "string",
+      "enum": [
+        "incomplete",
+        "pending_review",
+        "complete",
+        "issues"
+      ],
+      "title": "Documents Status"
+    },
+    "emergency_contact_name": {
+      "type": "string",
+      "title": "Emergency Contact Name"
+    },
+    "emergency_contact_phone": {
+      "type": "string",
+      "title": "Emergency Contact Phone"
+    },
+    "house_rules_signed": {
+      "type": "boolean",
+      "title": "House Rules Signed"
+    },
+    "eligibility_notes": {
+      "type": "string",
+      "title": "Eligibility Notes"
+    },
+    "internal_notes": {
+      "type": "string",
+      "title": "Internal Notes"
+    }
+  },
+  "required": [
+    "first_name",
+    "last_name",
+    "intake_status",
+    "applicant_status"
+  ]
+}

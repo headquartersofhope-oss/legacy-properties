@@ -1,0 +1,54 @@
+{
+  "name": "HousingProvider",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Provider Name"
+    },
+    "legal_entity_name": {
+      "type": "string",
+      "title": "Legal Entity Name"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "title": "Status"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address"
+    },
+    "city": {
+      "type": "string",
+      "title": "City"
+    },
+    "state": {
+      "type": "string",
+      "title": "State"
+    },
+    "zip": {
+      "type": "string",
+      "title": "ZIP"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "name",
+    "status"
+  ]
+}

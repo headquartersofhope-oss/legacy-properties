@@ -1,0 +1,58 @@
+{
+  "name": "ProgramFee",
+  "type": "object",
+  "properties": {
+    "housing_resident_id": {
+      "type": "string",
+      "title": "Resident ID"
+    },
+    "resident_name": {
+      "type": "string",
+      "title": "Resident Name"
+    },
+    "charge_type": {
+      "type": "string",
+      "enum": [
+        "program_fee",
+        "deposit",
+        "damage_fee",
+        "late_fee",
+        "other"
+      ],
+      "title": "Charge Type"
+    },
+    "amount": {
+      "type": "number",
+      "title": "Amount"
+    },
+    "due_date": {
+      "type": "string",
+      "title": "Due Date"
+    },
+    "fee_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "due",
+        "paid",
+        "waived",
+        "overdue"
+      ],
+      "title": "Status"
+    },
+    "paid_date": {
+      "type": "string",
+      "title": "Paid Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "housing_resident_id",
+    "charge_type",
+    "amount",
+    "fee_status"
+  ]
+}

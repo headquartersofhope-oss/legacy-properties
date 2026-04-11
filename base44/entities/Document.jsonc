@@ -1,0 +1,66 @@
+{
+  "name": "Document",
+  "type": "object",
+  "properties": {
+    "linked_entity_type": {
+      "type": "string",
+      "enum": [
+        "referral",
+        "applicant",
+        "resident"
+      ],
+      "title": "Linked To"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "title": "Linked Entity ID"
+    },
+    "linked_entity_name": {
+      "type": "string",
+      "title": "Linked Entity Name"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "id",
+        "income_verification",
+        "benefits_verification",
+        "house_rules_acknowledgment",
+        "agreement_form",
+        "referral_packet",
+        "medical_record",
+        "background_check",
+        "incident_attachment",
+        "other"
+      ],
+      "title": "Document Type"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "File URL"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "verified_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "verified",
+        "rejected",
+        "expired"
+      ],
+      "title": "Verification Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "linked_entity_type",
+    "linked_entity_id",
+    "document_type"
+  ]
+}

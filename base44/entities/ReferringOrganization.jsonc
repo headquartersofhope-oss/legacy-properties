@@ -1,0 +1,50 @@
+{
+  "name": "ReferringOrganization",
+  "type": "object",
+  "properties": {
+    "organization_name": {
+      "type": "string",
+      "title": "Organization Name"
+    },
+    "contact_name": {
+      "type": "string",
+      "title": "Contact Name"
+    },
+    "contact_email": {
+      "type": "string",
+      "title": "Contact Email"
+    },
+    "contact_phone": {
+      "type": "string",
+      "title": "Contact Phone"
+    },
+    "organization_type": {
+      "type": "string",
+      "enum": [
+        "nonprofit",
+        "government",
+        "healthcare",
+        "faith_based",
+        "other"
+      ],
+      "title": "Organization Type"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "pending_approval"
+      ],
+      "title": "Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "organization_name",
+    "status"
+  ]
+}

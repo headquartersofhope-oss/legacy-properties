@@ -1,0 +1,66 @@
+{
+  "name": "OccupancyRecord",
+  "type": "object",
+  "properties": {
+    "housing_resident_id": {
+      "type": "string",
+      "title": "Housing Resident ID"
+    },
+    "resident_name": {
+      "type": "string",
+      "title": "Resident Name"
+    },
+    "site_id": {
+      "type": "string",
+      "title": "Site ID"
+    },
+    "site_name": {
+      "type": "string",
+      "title": "Site Name"
+    },
+    "room_id": {
+      "type": "string",
+      "title": "Room ID"
+    },
+    "room_name": {
+      "type": "string",
+      "title": "Room Name"
+    },
+    "bed_id": {
+      "type": "string",
+      "title": "Bed ID"
+    },
+    "bed_label": {
+      "type": "string",
+      "title": "Bed Label"
+    },
+    "start_date": {
+      "type": "string",
+      "title": "Start Date"
+    },
+    "end_date": {
+      "type": "string",
+      "title": "End Date"
+    },
+    "occupancy_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "ended",
+        "transferred"
+      ],
+      "title": "Occupancy Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "housing_resident_id",
+    "site_id",
+    "bed_id",
+    "start_date",
+    "occupancy_status"
+  ]
+}

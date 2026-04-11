@@ -1,0 +1,24 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "housing_admin",
+        "housing_manager",
+        "housing_staff",
+        "referral_partner"
+      ],
+      "title": "Role"
+    },
+    "referring_organization_id": {
+      "type": "string",
+      "title": "Referring Organization ID"
+    },
+    "referring_organization_name": {
+      "type": "string",
+      "title": "Referring Organization Name"
+    }
+  }
+}

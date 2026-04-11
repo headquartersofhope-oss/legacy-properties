@@ -1,0 +1,71 @@
+{
+  "name": "ComplianceCheck",
+  "type": "object",
+  "properties": {
+    "site_id": {
+      "type": "string",
+      "title": "Site ID"
+    },
+    "site_name": {
+      "type": "string",
+      "title": "Site Name"
+    },
+    "room_id": {
+      "type": "string",
+      "title": "Room ID"
+    },
+    "bed_id": {
+      "type": "string",
+      "title": "Bed ID"
+    },
+    "housing_resident_id": {
+      "type": "string",
+      "title": "Resident ID"
+    },
+    "resident_name": {
+      "type": "string",
+      "title": "Resident Name"
+    },
+    "check_type": {
+      "type": "string",
+      "enum": [
+        "room_inspection",
+        "bed_check",
+        "resident_compliance",
+        "house_compliance",
+        "safety_inspection",
+        "fire_inspection",
+        "other"
+      ],
+      "title": "Check Type"
+    },
+    "check_date": {
+      "type": "string",
+      "title": "Check Date"
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "needs_attention",
+        "not_applicable"
+      ],
+      "title": "Result"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "follow_up_needed": {
+      "type": "boolean",
+      "title": "Follow-up Needed"
+    }
+  },
+  "required": [
+    "site_id",
+    "check_type",
+    "check_date",
+    "result"
+  ]
+}
