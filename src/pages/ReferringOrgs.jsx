@@ -11,8 +11,6 @@ import { Plus } from "lucide-react";
 
 export default function ReferringOrgs() {
   const { isAdmin, isManager, isInternal } = useCurrentUser();
-
-  if (!isInternal) return null;
   const [orgs, setOrgs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -21,6 +19,8 @@ export default function ReferringOrgs() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => { load(); }, []);
+
+  if (!isInternal) return null;
 
   async function load() {
     const data = await base44.entities.ReferringOrganization.list('-created_date');

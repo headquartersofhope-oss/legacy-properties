@@ -22,6 +22,12 @@ import ReferringOrgs from './pages/ReferringOrgs';
 import Reporting from './pages/Reporting';
 import Availability from './pages/Availability';
 import Settings from './pages/Settings';
+import Properties from './pages/Properties';
+import Leases from './pages/Leases';
+import BedSearch from './pages/BedSearch';
+import Diagnostics from './pages/Diagnostics';
+import PathwayIntegration from './pages/PathwayIntegration';
+import OperationalAudit from './pages/OperationalAudit';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -62,6 +68,12 @@ const AuthenticatedApp = () => {
         <Route path="/reporting" element={<Reporting />} />
         <Route path="/availability" element={<Availability />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/properties" element={<Properties />} />
+        <Route path="/leases" element={<Leases />} />
+        <Route path="/bed-search" element={<BedSearch />} />
+        <Route path="/diagnostics" element={<Diagnostics />} />
+        <Route path="/pathway-integration" element={<PathwayIntegration />} />
+        <Route path="/operational-audit" element={<OperationalAudit />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

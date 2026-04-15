@@ -1,0 +1,140 @@
+{
+  "name": "PropertyAmenity",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "title": "Property ID"
+    },
+    "property_name": {
+      "type": "string",
+      "title": "Property Name"
+    },
+    "amenity_category": {
+      "type": "string",
+      "enum": [
+        "bedding",
+        "storage",
+        "kitchen",
+        "laundry",
+        "common_area",
+        "tech_office",
+        "recreation",
+        "accessibility",
+        "safety_security",
+        "utilities",
+        "other"
+      ],
+      "title": "Amenity Category"
+    },
+    "amenity_type": {
+      "type": "string",
+      "title": "Amenity Type",
+      "description": "e.g., Beds, Mattresses, Lockers, Refrigerators, Washer/Dryer, Gym Equipment, Wi-Fi, etc."
+    },
+    "quantity": {
+      "type": "number",
+      "title": "Quantity"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "excellent",
+        "good",
+        "fair",
+        "needs_replacement"
+      ],
+      "title": "Condition"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date",
+      "title": "Last Updated"
+    }
+  },
+  "required": [
+    "property_id",
+    "amenity_category",
+    "amenity_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "property_manager"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "property_manager"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "referral_partner_user"
+              }
+            },
+            {
+              "data.is_partner_visible": true
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

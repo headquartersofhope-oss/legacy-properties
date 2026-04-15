@@ -5,13 +5,18 @@
     "role": {
       "type": "string",
       "enum": [
+        "super_admin",
+        "admin",
         "housing_admin",
         "housing_manager",
-        "housing_staff",
-        "referral_partner"
+        "property_manager",
+        "intake_coordinator",
+        "referral_partner_user",
+        "applicant_user",
+        "read_only_reviewer"
       ],
       "title": "Role",
-      "default": "housing_staff"
+      "default": "read_only_reviewer"
     },
     "referring_organization_id": {
       "type": "string",
@@ -20,6 +25,16 @@
     "referring_organization_name": {
       "type": "string",
       "title": "Referring Organization Name"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department",
+      "description": "e.g., Operations, Intake, Property Management"
+    },
+    "is_pathway_user": {
+      "type": "boolean",
+      "title": "Pathway App User",
+      "description": "Can access Pathway integration"
     }
   }
 }

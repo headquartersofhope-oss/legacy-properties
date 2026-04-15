@@ -1,0 +1,192 @@
+{
+  "name": "HousingApplication",
+  "type": "object",
+  "properties": {
+    "applicant_first_name": {
+      "type": "string",
+      "title": "First Name"
+    },
+    "applicant_last_name": {
+      "type": "string",
+      "title": "Last Name"
+    },
+    "applicant_email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "applicant_phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "applicant_dob": {
+      "type": "string",
+      "format": "date",
+      "title": "Date of Birth"
+    },
+    "application_status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "under_review",
+        "pending_documents",
+        "approved",
+        "denied",
+        "waitlisted",
+        "onboarding",
+        "move_in_ready",
+        "placed",
+        "inactive"
+      ],
+      "title": "Application Status"
+    },
+    "gender": {
+      "type": "string",
+      "enum": [
+        "male",
+        "female",
+        "non_binary",
+        "prefer_not_to_say"
+      ],
+      "title": "Gender"
+    },
+    "veteran_status": {
+      "type": "boolean",
+      "title": "Veteran"
+    },
+    "justice_involved": {
+      "type": "boolean",
+      "title": "Justice-Involved"
+    },
+    "recovery_focused": {
+      "type": "boolean",
+      "title": "Recovery/Treatment Focus"
+    },
+    "preferred_city": {
+      "type": "string",
+      "title": "Preferred City"
+    },
+    "preferred_zip": {
+      "type": "string",
+      "title": "Preferred ZIP"
+    },
+    "housing_needs": {
+      "type": "string",
+      "title": "Housing Needs/Notes"
+    },
+    "documents_status": {
+      "type": "string",
+      "enum": [
+        "incomplete",
+        "pending_review",
+        "complete",
+        "issues"
+      ],
+      "title": "Documents Status"
+    },
+    "document_checklist": {
+      "type": "string",
+      "title": "Document Checklist",
+      "description": "Track required docs: ID, Income, Background, etc."
+    },
+    "assigned_property_id": {
+      "type": "string",
+      "title": "Assigned Property ID"
+    },
+    "assigned_property_name": {
+      "type": "string",
+      "title": "Assigned Property Name"
+    },
+    "move_in_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Move-In Date"
+    },
+    "application_notes": {
+      "type": "string",
+      "title": "Internal Notes"
+    },
+    "applicant_notes": {
+      "type": "string",
+      "title": "Applicant Notes"
+    }
+  },
+  "required": [
+    "applicant_first_name",
+    "applicant_last_name",
+    "application_status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "intake_coordinator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "applicant_user"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "intake_coordinator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "intake_coordinator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

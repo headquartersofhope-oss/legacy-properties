@@ -12,11 +12,13 @@ export default function useCurrentUser() {
     }).catch(() => setLoading(false));
   }, []);
 
-  const isInternal = user && ['housing_admin', 'housing_manager', 'housing_staff'].includes(user.role);
-  const isAdmin = user?.role === 'housing_admin';
+  const isInternal = user && ['super_admin', 'admin', 'housing_admin', 'housing_manager', 'property_manager', 'intake_coordinator'].includes(user.role);
+  const isAdmin = user && ['super_admin', 'admin', 'housing_admin'].includes(user.role);
   const isManager = user?.role === 'housing_manager';
-  const isStaff = user?.role === 'housing_staff';
-  const isPartner = user?.role === 'referral_partner';
+  const isPropertyManager = user?.role === 'property_manager';
+  const isIntakeCoordinator = user?.role === 'intake_coordinator';
+  const isPartner = user?.role === 'referral_partner_user';
+  const isApplicant = user?.role === 'applicant_user';
 
-  return { user, loading, isInternal, isAdmin, isManager, isStaff, isPartner };
+  return { user, loading, isInternal, isAdmin, isManager, isPropertyManager, isIntakeCoordinator, isPartner, isApplicant };
 }

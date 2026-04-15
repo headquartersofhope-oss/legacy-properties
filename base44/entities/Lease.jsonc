@@ -1,0 +1,160 @@
+{
+  "name": "Lease",
+  "type": "object",
+  "properties": {
+    "lease_id": {
+      "type": "string",
+      "title": "Lease ID"
+    },
+    "property_id": {
+      "type": "string",
+      "title": "Property ID"
+    },
+    "property_name": {
+      "type": "string",
+      "title": "Property Name"
+    },
+    "owner_id": {
+      "type": "string",
+      "title": "Owner/Landlord ID"
+    },
+    "owner_name": {
+      "type": "string",
+      "title": "Owner Name"
+    },
+    "lessor_entity": {
+      "type": "string",
+      "title": "Lessor Entity",
+      "description": "RE Jones Properties / RE Jones Global / Other"
+    },
+    "lessee_entity": {
+      "type": "string",
+      "title": "Lessee Entity"
+    },
+    "lease_type": {
+      "type": "string",
+      "enum": [
+        "master_lease",
+        "operating_agreement",
+        "property_management",
+        "other"
+      ],
+      "title": "Lease Type"
+    },
+    "lease_start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Lease Start Date"
+    },
+    "lease_end_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Lease End Date"
+    },
+    "monthly_amount": {
+      "type": "number",
+      "title": "Monthly Amount"
+    },
+    "deposit_amount": {
+      "type": "number",
+      "title": "Deposit Amount"
+    },
+    "utilities_responsibility": {
+      "type": "string",
+      "title": "Utilities Responsibility"
+    },
+    "furnishing_responsibility": {
+      "type": "string",
+      "title": "Furnishing Responsibility"
+    },
+    "renewal_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "upcoming_renewal",
+        "expired",
+        "terminated",
+        "pending_signature"
+      ],
+      "title": "Renewal Status"
+    },
+    "contract_document_link": {
+      "type": "string",
+      "title": "Contract Document Link"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "compliance_reminder_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Compliance Reminder Date"
+    }
+  },
+  "required": [
+    "property_id",
+    "lessor_entity",
+    "lease_type",
+    "renewal_status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "property_manager"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

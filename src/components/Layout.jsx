@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 
 const internalNav = [
   { label: "Dashboard", path: "/", icon: Home },
+  { label: "Properties", path: "/properties", icon: Building2 },
+  { label: "Leases", path: "/leases", icon: FileText },
   { label: "Sites / Houses", path: "/sites", icon: Building2 },
   { label: "Rooms", path: "/rooms", icon: DoorOpen },
   { label: "Beds", path: "/beds", icon: BedDouble },
@@ -24,6 +26,7 @@ const internalNav = [
   { label: "Fees / Charges", path: "/fees", icon: DollarSign },
   { label: "Referring Orgs", path: "/referring-orgs", icon: Building },
   { label: "Reporting", path: "/reporting", icon: BarChart3 },
+  { label: "Diagnostics", path: "/diagnostics", icon: Settings },
   { label: "Settings", path: "/settings", icon: Settings },
 ];
 

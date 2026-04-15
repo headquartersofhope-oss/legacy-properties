@@ -1,0 +1,143 @@
+{
+  "name": "PropertyOwner",
+  "type": "object",
+  "properties": {
+    "owner_name": {
+      "type": "string",
+      "title": "Owner Name"
+    },
+    "company_name": {
+      "type": "string",
+      "title": "Company Name"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address"
+    },
+    "city": {
+      "type": "string",
+      "title": "City"
+    },
+    "state": {
+      "type": "string",
+      "title": "State"
+    },
+    "zip": {
+      "type": "string",
+      "title": "ZIP"
+    },
+    "relationship_type": {
+      "type": "string",
+      "enum": [
+        "landlord",
+        "master_lease_owner",
+        "partner_organization",
+        "other"
+      ],
+      "title": "Relationship Type"
+    },
+    "number_of_properties": {
+      "type": "number",
+      "title": "Number of Properties Provided"
+    },
+    "agreement_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "pending",
+        "terminated"
+      ],
+      "title": "Agreement Status"
+    },
+    "document_status": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "incomplete",
+        "pending_review",
+        "missing"
+      ],
+      "title": "Document Status"
+    },
+    "contract_document_link": {
+      "type": "string",
+      "title": "Contract/Agreement Link"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "owner_name",
+    "agreement_status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "property_manager"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

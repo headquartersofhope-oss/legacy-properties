@@ -11,8 +11,6 @@ import { Plus } from "lucide-react";
 
 export default function Rooms() {
   const { isAdmin, isManager, isInternal } = useCurrentUser();
-
-  if (!isInternal) return null;
   const [rooms, setRooms] = useState([]);
   const [sites, setSites] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,6 +20,8 @@ export default function Rooms() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => { load(); }, []);
+
+  if (!isInternal) return null;
 
   async function load() {
     const [r, s] = await Promise.all([base44.entities.Room.list('-created_date'), base44.entities.HousingSite.list()]);

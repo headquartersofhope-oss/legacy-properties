@@ -1,0 +1,269 @@
+{
+  "name": "Property",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "title": "Property ID"
+    },
+    "property_name": {
+      "type": "string",
+      "title": "Property Name"
+    },
+    "full_address": {
+      "type": "string",
+      "title": "Full Address"
+    },
+    "city": {
+      "type": "string",
+      "title": "City"
+    },
+    "state": {
+      "type": "string",
+      "title": "State"
+    },
+    "zip": {
+      "type": "string",
+      "title": "ZIP Code"
+    },
+    "property_type": {
+      "type": "string",
+      "enum": [
+        "transitional_housing",
+        "sober_living",
+        "veteran_house",
+        "justice_reentry",
+        "treatment_recovery",
+        "womens_house",
+        "mens_house",
+        "mixed_special"
+      ],
+      "title": "Property Type"
+    },
+    "ownership_type": {
+      "type": "string",
+      "enum": [
+        "re_jones_owned",
+        "master_lease",
+        "master_lease_global",
+        "third_party_partner"
+      ],
+      "title": "Ownership Type"
+    },
+    "house_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "under_maintenance",
+        "pending_setup"
+      ],
+      "title": "House Status"
+    },
+    "visible_to_partners": {
+      "type": "boolean",
+      "title": "Visible to Partners",
+      "default": true
+    },
+    "visible_publicly": {
+      "type": "boolean",
+      "title": "Visible Publicly",
+      "default": false
+    },
+    "total_bed_count": {
+      "type": "number",
+      "title": "Total Bed Count"
+    },
+    "room_count": {
+      "type": "number",
+      "title": "Room Count"
+    },
+    "bathroom_count": {
+      "type": "number",
+      "title": "Bathroom Count"
+    },
+    "kitchen_count": {
+      "type": "number",
+      "title": "Kitchen Count"
+    },
+    "refrigerators": {
+      "type": "boolean",
+      "title": "Has Refrigerators"
+    },
+    "tech_room": {
+      "type": "boolean",
+      "title": "Has Tech Room"
+    },
+    "gym_area": {
+      "type": "boolean",
+      "title": "Has Gym/Workout Area"
+    },
+    "lockers": {
+      "type": "boolean",
+      "title": "Has Lockers"
+    },
+    "washer_dryer": {
+      "type": "boolean",
+      "title": "Has Washer/Dryer"
+    },
+    "internet_wifi": {
+      "type": "boolean",
+      "title": "Has Internet/Wi-Fi"
+    },
+    "parking": {
+      "type": "boolean",
+      "title": "Has Parking"
+    },
+    "ada_accessible": {
+      "type": "boolean",
+      "title": "ADA Accessible"
+    },
+    "furnishing_level": {
+      "type": "string",
+      "enum": [
+        "unfurnished",
+        "partially_furnished",
+        "fully_furnished",
+        "premium_furnished"
+      ],
+      "title": "Furnishing Level"
+    },
+    "demographic_focus": {
+      "type": "string",
+      "title": "Primary Demographic Focus",
+      "description": "e.g., Veterans, Justice-Involved, Recovery-Focused, etc."
+    },
+    "compatible_demographics": {
+      "type": "string",
+      "title": "Compatible Demographics",
+      "description": "Comma-separated list of compatible populations"
+    },
+    "gender_restriction": {
+      "type": "string",
+      "enum": [
+        "none",
+        "male_only",
+        "female_only",
+        "mixed"
+      ],
+      "title": "Gender Restriction"
+    },
+    "house_manager_name": {
+      "type": "string",
+      "title": "House Manager Name"
+    },
+    "house_manager_email": {
+      "type": "string",
+      "title": "House Manager Email"
+    },
+    "house_manager_phone": {
+      "type": "string",
+      "title": "House Manager Phone"
+    },
+    "owner_id": {
+      "type": "string",
+      "title": "Owner/Landlord ID"
+    },
+    "owner_name": {
+      "type": "string",
+      "title": "Owner/Landlord Name"
+    },
+    "lease_id": {
+      "type": "string",
+      "title": "Lease Record ID"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "photos_doc_link": {
+      "type": "string",
+      "title": "Photos/Documentation Link"
+    }
+  },
+  "required": [
+    "property_name",
+    "house_status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "property_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "intake_coordinator"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "referral_partner_user"
+              }
+            },
+            {
+              "data.visible_to_partners": true
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}
