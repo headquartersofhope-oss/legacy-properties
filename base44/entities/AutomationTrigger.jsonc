@@ -1,0 +1,147 @@
+{
+  "name": "AutomationTrigger",
+  "type": "object",
+  "properties": {
+    "trigger_type": {
+      "type": "string",
+      "enum": [
+        "property_created",
+        "property_updated",
+        "bed_available",
+        "bed_occupied",
+        "referral_submitted",
+        "application_approved",
+        "application_denied",
+        "resident_moved_in",
+        "resident_moved_out",
+        "lease_expiring",
+        "document_uploaded",
+        "compliance_check_failed",
+        "occupancy_mismatch",
+        "waitlist_updated"
+      ],
+      "title": "Trigger Type"
+    },
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "property",
+        "bed",
+        "referral",
+        "application",
+        "resident",
+        "lease",
+        "document",
+        "compliance_check"
+      ],
+      "title": "Entity Type"
+    },
+    "entity_id": {
+      "type": "string",
+      "title": "Entity ID"
+    },
+    "trigger_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Trigger Timestamp"
+    },
+    "zapier_webhook_sent": {
+      "type": "boolean",
+      "title": "Zapier Webhook Sent",
+      "default": false
+    },
+    "twilio_sms_sent": {
+      "type": "boolean",
+      "title": "Twilio SMS Sent",
+      "default": false
+    },
+    "email_sent": {
+      "type": "boolean",
+      "title": "Email Sent",
+      "default": false
+    },
+    "pathway_synced": {
+      "type": "boolean",
+      "title": "Pathway Synced",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "failed"
+      ],
+      "title": "Status"
+    },
+    "error_message": {
+      "type": "string",
+      "title": "Error Message"
+    },
+    "metadata": {
+      "type": "string",
+      "title": "Additional Metadata (JSON)"
+    }
+  },
+  "required": [
+    "trigger_type",
+    "entity_type",
+    "trigger_timestamp",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

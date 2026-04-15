@@ -1,0 +1,209 @@
+{
+  "name": "IntegrationReadinesAudit",
+  "type": "object",
+  "properties": {
+    "audit_date": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Audit Date"
+    },
+    "audit_type": {
+      "type": "string",
+      "enum": [
+        "full_diagnostic",
+        "pathway_readiness",
+        "document_readiness",
+        "automation_readiness",
+        "integration_check"
+      ],
+      "title": "Audit Type"
+    },
+    "readiness_status": {
+      "type": "string",
+      "enum": [
+        "ready",
+        "ready_with_warnings",
+        "needs_work",
+        "critical_issues"
+      ],
+      "title": "Overall Readiness"
+    },
+    "pathway_readiness": {
+      "type": "object",
+      "title": "Pathway Readiness",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "missing_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "broken_links": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "completeness_percent": {
+          "type": "number"
+        }
+      }
+    },
+    "document_readiness": {
+      "type": "object",
+      "title": "Document Readiness",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "unlinked_records": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "drive_integration_ready": {
+          "type": "boolean"
+        },
+        "document_types_covered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "automation_readiness": {
+      "type": "object",
+      "title": "Automation Readiness",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "missing_triggers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "zapier_ready": {
+          "type": "boolean"
+        },
+        "twilio_ready": {
+          "type": "boolean"
+        },
+        "email_automation_ready": {
+          "type": "boolean"
+        }
+      }
+    },
+    "data_quality": {
+      "type": "object",
+      "title": "Data Quality",
+      "properties": {
+        "property_completeness": {
+          "type": "number"
+        },
+        "lease_completeness": {
+          "type": "number"
+        },
+        "occupancy_match_percent": {
+          "type": "number"
+        },
+        "bed_inventory_match_percent": {
+          "type": "number"
+        },
+        "demographic_fit_conflicts": {
+          "type": "number"
+        }
+      }
+    },
+    "critical_issues": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "title": "Critical Issues"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings"
+    },
+    "recommendations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "title": "Recommendations"
+    },
+    "next_steps": {
+      "type": "string",
+      "title": "Next Steps"
+    }
+  },
+  "required": [
+    "audit_date",
+    "audit_type",
+    "readiness_status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

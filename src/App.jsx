@@ -26,6 +26,7 @@ import Properties from './pages/Properties';
 import Leases from './pages/Leases';
 import BedSearch from './pages/BedSearch';
 import Diagnostics from './pages/Diagnostics';
+import IntegrationReadiness from './pages/IntegrationReadiness';
 import PathwayIntegration from './pages/PathwayIntegration';
 import OperationalAudit from './pages/OperationalAudit';
 
@@ -72,6 +73,7 @@ const AuthenticatedApp = () => {
         <Route path="/leases" element={<Leases />} />
         <Route path="/bed-search" element={<BedSearch />} />
         <Route path="/diagnostics" element={<Diagnostics />} />
+        <Route path="/integration-readiness" element={<IntegrationReadiness />} />
         <Route path="/pathway-integration" element={<PathwayIntegration />} />
         <Route path="/operational-audit" element={<OperationalAudit />} />
         <Route path="*" element={<PageNotFound />} />

@@ -1,0 +1,128 @@
+{
+  "name": "ExternalSystemSync",
+  "type": "object",
+  "properties": {
+    "system_name": {
+      "type": "string",
+      "enum": [
+        "pathway_app",
+        "google_drive",
+        "zapier",
+        "twilio",
+        "email_service",
+        "other"
+      ],
+      "title": "External System"
+    },
+    "sync_type": {
+      "type": "string",
+      "enum": [
+        "full_export",
+        "incremental_sync",
+        "webhook_event",
+        "scheduled_sync"
+      ],
+      "title": "Sync Type"
+    },
+    "entity_type": {
+      "type": "string",
+      "title": "Entity Type Synced"
+    },
+    "last_sync_date": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Last Sync Date"
+    },
+    "records_synced": {
+      "type": "number",
+      "title": "Records Synced"
+    },
+    "sync_status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "partial_success",
+        "failed",
+        "pending"
+      ],
+      "title": "Sync Status"
+    },
+    "error_details": {
+      "type": "string",
+      "title": "Error Details"
+    },
+    "next_sync_scheduled": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Next Sync Scheduled"
+    },
+    "api_response_code": {
+      "type": "number",
+      "title": "API Response Code"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "system_name",
+    "sync_type",
+    "last_sync_date",
+    "sync_status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}
