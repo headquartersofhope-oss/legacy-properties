@@ -23,6 +23,7 @@ import Reporting from './pages/Reporting';
 import Availability from './pages/Availability';
 import Settings from './pages/Settings';
 import Properties from './pages/Properties';
+import PropertyDetail from './pages/PropertyDetail';
 import Leases from './pages/Leases';
 import BedSearch from './pages/BedSearch';
 import Diagnostics from './pages/Diagnostics';
@@ -71,6 +72,7 @@ const AuthenticatedApp = () => {
         <Route path="/availability" element={<Availability />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/properties" element={<Properties />} />
+        <Route path="/property/:id" element={<PropertyDetail />} />
         <Route path="/leases" element={<Leases />} />
         <Route path="/bed-search" element={<BedSearch />} />
         <Route path="/diagnostics" element={<Diagnostics />} />

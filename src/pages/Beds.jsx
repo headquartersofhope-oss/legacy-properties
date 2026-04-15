@@ -7,8 +7,9 @@ import StatusBadge from "@/components/StatusBadge";
 import FormModal from "@/components/FormModal";
 import FormField from "@/components/FormField";
 import { Button } from "@/components/ui/button";
-import { Plus, Users } from "lucide-react";
+import { Plus, Bed, Filter, X } from "lucide-react";
 import EmptyState from "@/components/EmptyState";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Beds() {
   const { isAdmin, isManager, isInternal } = useCurrentUser();
@@ -21,8 +22,20 @@ export default function Beds() {
   const [form, setForm] = useState({ site_id: '', site_name: '', room_id: '', room_name: '', bed_label: '', bed_status: 'available', bed_type: 'standard', status: 'active', restriction_tags: '', notes: '' });
   const [editId, setEditId] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [statusFilter, setStatusFilter] = useState(null);
+  const [activeFilter, setActiveFilter] = useState(null);
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { 
+    load();
+    
+    // Load navigation filters from session
+    const navFilters = sessionStorage.getItem('navigationFilters');
+    if (navFilters) {
+      const filters = JSON.parse(navFilters);
+      if (filters.status) setStatusFilter(filters.status);
+      sessionStorage.removeItem('navigationFilters');
+    }
+  }, []);
 
   if (!isInternal) return null;
 
@@ -69,6 +82,15 @@ export default function Beds() {
     setSaving(false); setShowForm(false); setEditId(null); load();
   }
 
+  // Apply filters
+  let displayedBeds = beds;
+  if (statusFilter) {
+    displayedBeds = displayedBeds.filter(b => b.bed_status === statusFilter);
+  }
+  if (activeFilter) {
+    displayedBeds = displayedBeds.filter(b => b.status === activeFilter);
+  }
+
   const columns = [
     { header: "Bed Label", accessor: "bed_label" },
     { header: "Site", accessor: "site_name" },
@@ -87,23 +109,86 @@ export default function Beds() {
     { value: 'bunk_bottom', label: 'Bunk Bottom' }, { value: 'single', label: 'Single' }, { value: 'double', label: 'Double' },
   ];
 
+  const hasActiveFilters = statusFilter || activeFilter;
+
   return (
-    <div>
-      <PageHeader title="Beds" subtitle="Manage beds across all sites and rooms">
+    <div className="space-y-6">
+      <PageHeader title="Beds" subtitle={`${displayedBeds.length} of ${beds.length} beds`}>
         {(isAdmin || isManager) && <Button onClick={openNew}><Plus className="w-4 h-4 mr-2" /> Add Bed</Button>}
       </PageHeader>
+
+      {/* Filters */}
+      {beds.length > 0 && (
+        <div className="bg-card border-2 border-border rounded-lg p-4">
+          <div className="space-y-3">
+            {hasActiveFilters && (
+              <div className="text-xs text-muted-foreground font-medium">
+                Filters active ({(statusFilter ? 1 : 0) + (activeFilter ? 1 : 0)})
+              </div>
+            )}
+            <div className="flex flex-wrap gap-2">
+              <div className="flex items-center gap-1">
+                <Select value={statusFilter || ""} onValueChange={(v) => setStatusFilter(v || null)}>
+                  <SelectTrigger className="w-40 h-8 text-xs">
+                    <SelectValue placeholder="Bed Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={null}>All Status</SelectItem>
+                    {bedStatusOptions.map(opt => (
+                      <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <Select value={activeFilter || ""} onValueChange={(v) => setActiveFilter(v || null)}>
+                  <SelectTrigger className="w-40 h-8 text-xs">
+                    <SelectValue placeholder="Active Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={null}>All Active</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="inactive">Inactive</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {hasActiveFilters && (
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => { setStatusFilter(null); setActiveFilter(null); }}
+                  className="h-8 text-xs"
+                >
+                  <X className="w-3 h-3 mr-1" /> Clear filters
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {loading ? (
         <div className="flex justify-center py-12"><div className="w-6 h-6 border-3 border-primary/30 border-t-primary rounded-full animate-spin" /></div>
       ) : beds.length === 0 ? (
         <EmptyState
-          icon={Users}
+          icon={Bed}
           title="No beds configured"
           description="Beds must be assigned to rooms inside a house. Create rooms first, then add beds."
           actionLabel="Create Bed"
           onAction={openNew}
         />
+      ) : displayedBeds.length === 0 ? (
+        <EmptyState
+          icon={Bed}
+          title="No beds match your filters"
+          description="Try adjusting your filters to see more beds."
+          actionLabel="Clear filters"
+          onAction={() => { setStatusFilter(null); setActiveFilter(null); }}
+        />
       ) : (
-        <DataTable columns={columns} data={beds} onRowClick={(isAdmin || isManager) ? openEdit : undefined} />
+        <DataTable columns={columns} data={displayedBeds} onRowClick={(isAdmin || isManager) ? openEdit : undefined} />
       )}
 
       <FormModal open={showForm} onClose={() => setShowForm(false)} title={editId ? "Edit Bed" : "Add Bed"} onSubmit={handleSubmit} loading={saving}>
