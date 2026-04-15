@@ -1,0 +1,154 @@
+{
+  "name": "HousingModelConfig",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "title": "Property ID"
+    },
+    "property_name": {
+      "type": "string",
+      "title": "Property Name"
+    },
+    "current_model": {
+      "type": "string",
+      "enum": [
+        "per_bed",
+        "turnkey_house",
+        "mixed_flex"
+      ],
+      "title": "Current Housing Model"
+    },
+    "model_effective_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Model Effective Date"
+    },
+    "model_is_locked": {
+      "type": "boolean",
+      "default": false,
+      "title": "Model Is Locked",
+      "description": "If true, cannot change this model"
+    },
+    "previous_model": {
+      "type": "string",
+      "enum": [
+        "per_bed",
+        "turnkey_house",
+        "mixed_flex"
+      ],
+      "title": "Previous Model"
+    },
+    "transition_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Last Transition Date"
+    },
+    "transition_notes": {
+      "type": "string",
+      "title": "Transition Notes",
+      "description": "Why the model changed, how occupancy was handled, etc."
+    },
+    "allows_bed_search": {
+      "type": "boolean",
+      "default": true,
+      "title": "Allows Bed Search",
+      "description": "Whether per-bed searches can find this property"
+    },
+    "allows_individual_referrals": {
+      "type": "boolean",
+      "default": true,
+      "title": "Allows Individual Referrals",
+      "description": "Whether individual bed referrals are accepted"
+    },
+    "turnkey_lease_id": {
+      "type": "string",
+      "title": "Turnkey Lease Record ID"
+    },
+    "turnkey_client_id": {
+      "type": "string",
+      "title": "Current Turnkey Client ID"
+    },
+    "turnkey_client_name": {
+      "type": "string",
+      "title": "Current Turnkey Client Name"
+    },
+    "bed_inventory_visible": {
+      "type": "boolean",
+      "default": true,
+      "title": "Bed Inventory Visible",
+      "description": "Whether individual bed inventory is shown externally"
+    },
+    "config_status": {
+      "type": "string",
+      "enum": [
+        "current",
+        "archived",
+        "pending_transition"
+      ],
+      "title": "Config Status"
+    },
+    "internal_notes": {
+      "type": "string",
+      "title": "Internal Notes"
+    }
+  },
+  "required": [
+    "property_id",
+    "current_model"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

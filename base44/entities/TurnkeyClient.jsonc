@@ -1,0 +1,152 @@
+{
+  "name": "TurnkeyClient",
+  "type": "object",
+  "properties": {
+    "client_name": {
+      "type": "string",
+      "title": "Client/Operator Name"
+    },
+    "client_type": {
+      "type": "string",
+      "enum": [
+        "nonprofit",
+        "government",
+        "contract_organization",
+        "re_jones_direct",
+        "partner_organization",
+        "other"
+      ],
+      "title": "Client Type"
+    },
+    "contact_name": {
+      "type": "string",
+      "title": "Contact Name"
+    },
+    "contact_email": {
+      "type": "string",
+      "title": "Contact Email"
+    },
+    "contact_phone": {
+      "type": "string",
+      "title": "Contact Phone"
+    },
+    "contract_reference": {
+      "type": "string",
+      "title": "Contract/Agreement Reference",
+      "description": "Link to contract document or agreement ID"
+    },
+    "lease_start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Lease Start Date"
+    },
+    "lease_end_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Lease End Date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "pending",
+        "completed",
+        "terminated",
+        "on_hold"
+      ],
+      "title": "Status"
+    },
+    "billing_relationship": {
+      "type": "string",
+      "title": "Billing Relationship",
+      "description": "e.g., monthly fee, per-placement, cost-plus, etc."
+    },
+    "property_id": {
+      "type": "string",
+      "title": "Primary Property ID",
+      "description": "Main property this client operates (if single-property)"
+    },
+    "property_name": {
+      "type": "string",
+      "title": "Primary Property Name"
+    },
+    "current_occupancy_count": {
+      "type": "number",
+      "title": "Current Occupancy Count",
+      "description": "How many people currently in the house"
+    },
+    "authorized_occupancy_count": {
+      "type": "number",
+      "title": "Authorized Occupancy Count",
+      "description": "Max allowed per lease/contract"
+    },
+    "use_case_notes": {
+      "type": "string",
+      "title": "Use Case / Program Notes",
+      "description": "How client is using the house, program type, any special arrangements"
+    },
+    "internal_notes": {
+      "type": "string",
+      "title": "Internal Notes"
+    }
+  },
+  "required": [
+    "client_name",
+    "client_type",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

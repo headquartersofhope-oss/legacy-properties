@@ -4,7 +4,7 @@ import useCurrentUser from "@/lib/useCurrentUser";
 import {
   Home, Building2, DoorOpen, BedDouble, FileText, Users, UserCheck,
   ClipboardList, FolderOpen, AlertTriangle, ShieldCheck, DollarSign,
-  Building, BarChart3, Settings, Menu, X, LogOut, ChevronRight, Zap
+  Building, BarChart3, Settings, Menu, X, LogOut, ChevronRight, Zap, Grid3X3
 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,7 @@ const internalNav = [
   { label: "Fees / Charges", path: "/fees", icon: DollarSign },
   { label: "Referring Orgs", path: "/referring-orgs", icon: Building },
   { label: "Reporting", path: "/reporting", icon: BarChart3 },
+  { label: "Housing Models", path: "/housing-models", icon: Grid3X3 },
   { label: "Diagnostics", path: "/diagnostics", icon: Settings },
   { label: "Integration Readiness", path: "/integration-readiness", icon: Zap },
   { label: "Settings", path: "/settings", icon: Settings },

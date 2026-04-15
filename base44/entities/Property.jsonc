@@ -40,6 +40,38 @@
       ],
       "title": "Property Type"
     },
+    "housing_model": {
+      "type": "string",
+      "enum": [
+        "per_bed",
+        "turnkey_house",
+        "mixed_flex"
+      ],
+      "default": "per_bed",
+      "title": "Housing Model",
+      "description": "per_bed = individual bed referrals, turnkey_house = whole-house lease to single client, mixed_flex = can switch"
+    },
+    "model_is_fixed": {
+      "type": "boolean",
+      "default": false,
+      "title": "Model Is Fixed",
+      "description": "If true, property cannot change housing model"
+    },
+    "open_for_referrals": {
+      "type": "boolean",
+      "default": true,
+      "title": "Open for Referrals",
+      "description": "Whether this property accepts individual referrals (false if turnkey-exclusive)"
+    },
+    "turnkey_client_id": {
+      "type": "string",
+      "title": "Current Turnkey Client ID",
+      "description": "If house is under turnkey model, who operates it"
+    },
+    "turnkey_client_name": {
+      "type": "string",
+      "title": "Current Turnkey Client Name"
+    },
     "ownership_type": {
       "type": "string",
       "enum": [
