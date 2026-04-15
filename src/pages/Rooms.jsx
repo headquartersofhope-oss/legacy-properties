@@ -7,7 +7,8 @@ import StatusBadge from "@/components/StatusBadge";
 import FormModal from "@/components/FormModal";
 import FormField from "@/components/FormField";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, DoorOpen } from "lucide-react";
+import EmptyState from "@/components/EmptyState";
 
 export default function Rooms() {
   const { isAdmin, isManager, isInternal } = useCurrentUser();
@@ -67,7 +68,19 @@ export default function Rooms() {
           </Button>
         )}
       </PageHeader>
-      {loading ? <div className="flex justify-center py-12"><div className="w-6 h-6 border-3 border-primary/30 border-t-primary rounded-full animate-spin" /></div> : <DataTable columns={columns} data={rooms} onRowClick={(isAdmin || isManager) ? openEdit : undefined} />}
+      {loading ? (
+        <div className="flex justify-center py-12"><div className="w-6 h-6 border-3 border-primary/30 border-t-primary rounded-full animate-spin" /></div>
+      ) : rooms.length === 0 ? (
+        <EmptyState
+          icon={DoorOpen}
+          title="No rooms configured"
+          description="Rooms are where beds are assigned. Create a room first, then add beds within it."
+          actionLabel="Create Room"
+          onAction={() => { setForm({ site_id: '', site_name: '', room_name: '', capacity: '', status: 'active', notes: '' }); setEditId(null); setShowForm(true); }}
+        />
+      ) : (
+        <DataTable columns={columns} data={rooms} onRowClick={(isAdmin || isManager) ? openEdit : undefined} />
+      )}
 
       <FormModal open={showForm} onClose={() => setShowForm(false)} title={editId ? "Edit Room" : "Add Room"} onSubmit={handleSubmit} loading={saving}>
         <FormField label="Site" name="site_id" value={form.site_id} onChange={handleChange} type="select" options={sites.map(s => ({ value: s.id, label: s.site_name }))} required />

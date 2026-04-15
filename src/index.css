@@ -40,6 +40,19 @@
     --sidebar-accent-foreground: 210 15% 90%;
     --sidebar-border: 215 20% 22%;
     --sidebar-ring: 215 65% 55%;
+    /* Housing Type Colors */
+    --type-transitional: 210 80% 50%;
+    --type-recovery: 160 75% 45%;
+    --type-veterans: 280 65% 50%;
+    --type-reentry: 30 85% 55%;
+    --type-women: 340 70% 55%;
+    --type-mens: 215 20% 35%;
+    --type-turnkey: 45 95% 50%;
+    /* Premium Enhancements */
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px rgb(0 0 0 / 0.07);
+    --shadow-lg: 0 10px 15px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px rgb(0 0 0 / 0.12);
   }
 
   .dark {

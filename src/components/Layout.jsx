@@ -4,38 +4,71 @@ import useCurrentUser from "@/lib/useCurrentUser";
 import {
   Home, Building2, DoorOpen, BedDouble, FileText, Users, UserCheck,
   ClipboardList, FolderOpen, AlertTriangle, ShieldCheck, DollarSign,
-  Building, BarChart3, Settings, Menu, X, LogOut, ChevronRight, Zap, Grid3X3
+  Building, BarChart3, Settings, Menu, X, LogOut, ChevronRight, Zap, Grid3X3,
+  Send, LayoutGrid, Layers, Network
 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 
 const internalNav = [
-  { label: "Dashboard", path: "/", icon: Home },
-  { label: "Properties", path: "/properties", icon: Building2 },
-  { label: "Leases", path: "/leases", icon: FileText },
-  { label: "Sites / Houses", path: "/sites", icon: Building2 },
-  { label: "Rooms", path: "/rooms", icon: DoorOpen },
-  { label: "Beds", path: "/beds", icon: BedDouble },
-  { label: "Referrals", path: "/referrals", icon: FileText },
-  { label: "Applicants", path: "/applicants", icon: Users },
-  { label: "Residents", path: "/residents", icon: UserCheck },
-  { label: "Occupancy", path: "/occupancy", icon: ClipboardList },
-  { label: "Documents", path: "/documents", icon: FolderOpen },
-  { label: "Incidents", path: "/incidents", icon: AlertTriangle },
-  { label: "Compliance", path: "/compliance", icon: ShieldCheck },
-  { label: "Fees / Charges", path: "/fees", icon: DollarSign },
-  { label: "Referring Orgs", path: "/referring-orgs", icon: Building },
-  { label: "Reporting", path: "/reporting", icon: BarChart3 },
-  { label: "Housing Models", path: "/housing-models", icon: Grid3X3 },
-  { label: "Diagnostics", path: "/diagnostics", icon: Settings },
-  { label: "Integration Readiness", path: "/integration-readiness", icon: Zap },
-  { label: "Settings", path: "/settings", icon: Settings },
+  {
+    section: 'OVERVIEW',
+    items: [
+      { label: 'Dashboard', path: '/', icon: Home },
+    ]
+  },
+  {
+    section: 'PROPERTIES',
+    items: [
+      { label: 'Houses', path: '/properties', icon: Building2 },
+      { label: 'Rooms', path: '/rooms', icon: DoorOpen },
+      { label: 'Beds', path: '/beds', icon: BedDouble },
+      { label: 'Leases', path: '/leases', icon: FileText },
+    ]
+  },
+  {
+    section: 'PLACEMENT',
+    items: [
+      { label: 'Referrals', path: '/referrals', icon: Send },
+      { label: 'Applicants', path: '/applicants', icon: Users },
+      { label: 'Residents', path: '/residents', icon: UserCheck },
+      { label: 'Occupancy', path: '/occupancy', icon: ClipboardList },
+    ]
+  },
+  {
+    section: 'OPERATIONS',
+    items: [
+      { label: 'Documents', path: '/documents', icon: FolderOpen },
+      { label: 'Incidents', path: '/incidents', icon: AlertTriangle },
+      { label: 'Compliance', path: '/compliance', icon: ShieldCheck },
+      { label: 'Fees', path: '/fees', icon: DollarSign },
+    ]
+  },
+  {
+    section: 'INTELLIGENCE',
+    items: [
+      { label: 'Reporting', path: '/reporting', icon: BarChart3 },
+      { label: 'Diagnostics', path: '/diagnostics', icon: Zap },
+      { label: 'Housing Models', path: '/housing-models', icon: Layers },
+      { label: 'Integration Readiness', path: '/integration-readiness', icon: Network },
+    ]
+  },
+  {
+    section: 'SYSTEM',
+    items: [
+      { label: 'Settings', path: '/settings', icon: Settings },
+    ]
+  },
 ];
 
 const partnerNav = [
-  { label: "Dashboard", path: "/", icon: Home },
-  { label: "My Referrals", path: "/referrals", icon: FileText },
-  { label: "Availability", path: "/availability", icon: BedDouble },
+  {
+    section: 'PLACEMENT',
+    items: [
+      { label: 'Bed Search', path: '/bed-search', icon: LayoutGrid },
+      { label: 'Availability', path: '/availability', icon: BedDouble },
+    ]
+  },
 ];
 
 export default function Layout() {
@@ -77,22 +110,35 @@ export default function Layout() {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-3 px-3 space-y-0.5">
-          {filteredNav.map(item => {
-            const Icon = item.icon;
-            const active = location.pathname === item.path || (item.path !== '/' && location.pathname.startsWith(item.path));
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium transition-colors ${active ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground'}`}
-              >
-                <Icon className="w-4 h-4 flex-shrink-0" />
-                {item.label}
-              </Link>
-            );
-          })}
+        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-5">
+          {filteredNav.map((section) => (
+            <div key={section.section}>
+              <div className="px-3 py-2 text-xs font-bold text-sidebar-foreground/50 tracking-widest">
+                {section.section}
+              </div>
+              <div className="space-y-1">
+                {section.items.map((item) => {
+                  const Icon = item.icon;
+                  const active = location.pathname === item.path || (item.path !== '/' && location.pathname.startsWith(item.path));
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setSidebarOpen(false)}
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-[13px] font-medium transition-all duration-150 ${
+                        active
+                          ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-sm'
+                          : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4 flex-shrink-0" />
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
 
         <div className="border-t border-sidebar-border p-3">

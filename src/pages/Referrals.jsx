@@ -5,9 +5,10 @@ import PageHeader from "@/components/PageHeader";
 import DataTable from "@/components/DataTable";
 import StatusBadge from "@/components/StatusBadge";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Send } from "lucide-react";
 import ReferralForm from "@/components/referrals/ReferralForm";
 import ReferralDetail from "@/components/referrals/ReferralDetail";
+import EmptyState from "@/components/EmptyState";
 
 export default function Referrals() {
   const { user, isInternal, isPartner } = useCurrentUser();
@@ -52,6 +53,14 @@ export default function Referrals() {
 
       {loading ? (
         <div className="flex justify-center py-12"><div className="w-6 h-6 border-3 border-primary/30 border-t-primary rounded-full animate-spin" /></div>
+      ) : referrals.length === 0 ? (
+        <EmptyState
+          icon={Send}
+          title="No referrals yet"
+          description={isPartner ? "Submit a new referral to place a client in housing." : "No incoming referrals. Partners will submit referrals here."}
+          actionLabel={isPartner ? "New Referral" : undefined}
+          onAction={isPartner ? () => { setEditRef(null); setShowForm(true); } : undefined}
+        />
       ) : (
         <DataTable columns={columns} data={referrals} onRowClick={(r) => setShowDetail(r)} />
       )}
