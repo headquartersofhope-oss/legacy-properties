@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useCurrentUser } from '@/lib/useCurrentUser';
+import useCurrentUser from '@/lib/useCurrentUser';
 import PageHeader from '@/components/PageHeader';
 import KPIStrip from '@/components/KPIStrip';
 import OperationsPanel from '@/components/OperationsPanel';
