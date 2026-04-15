@@ -1,0 +1,141 @@
+{
+  "name": "Payment",
+  "type": "object",
+  "properties": {
+    "payment_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Payment Date"
+    },
+    "invoice_id": {
+      "type": "string",
+      "title": "Invoice ID"
+    },
+    "invoice_number": {
+      "type": "string",
+      "title": "Invoice Number"
+    },
+    "property_id": {
+      "type": "string",
+      "title": "Property ID"
+    },
+    "property_name": {
+      "type": "string",
+      "title": "Property Name"
+    },
+    "payment_source_id": {
+      "type": "string",
+      "title": "Payment Source ID"
+    },
+    "payer_name": {
+      "type": "string",
+      "title": "Payer Name"
+    },
+    "payment_amount": {
+      "type": "number",
+      "title": "Payment Amount"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "check",
+        "ach",
+        "credit_card",
+        "cash",
+        "other"
+      ],
+      "title": "Payment Method"
+    },
+    "reference_number": {
+      "type": "string",
+      "title": "Reference Number",
+      "description": "Check number, ACH ref, transaction ID, etc."
+    },
+    "is_partial": {
+      "type": "boolean",
+      "default": false,
+      "title": "Is Partial Payment"
+    },
+    "applied_to_multiple": {
+      "type": "boolean",
+      "default": false,
+      "title": "Applied to Multiple Invoices"
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processed",
+        "cleared",
+        "failed",
+        "refunded"
+      ],
+      "default": "processed",
+      "title": "Payment Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "payment_date",
+    "invoice_id",
+    "property_id",
+    "payment_amount"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "billing_staff"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "billing_staff"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "billing_staff"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "name": "RoomTransfer",
+  "type": "object",
+  "properties": {
+    "resident_id": {
+      "type": "string",
+      "title": "Resident ID"
+    },
+    "resident_name": {
+      "type": "string",
+      "title": "Resident Name"
+    },
+    "from_property_id": {
+      "type": "string",
+      "title": "From Property ID"
+    },
+    "from_property_name": {
+      "type": "string",
+      "title": "From Property Name"
+    },
+    "from_room_id": {
+      "type": "string",
+      "title": "From Room ID"
+    },
+    "from_room_name": {
+      "type": "string",
+      "title": "From Room Name"
+    },
+    "from_bed_id": {
+      "type": "string",
+      "title": "From Bed ID"
+    },
+    "from_bed_label": {
+      "type": "string",
+      "title": "From Bed Label"
+    },
+    "to_property_id": {
+      "type": "string",
+      "title": "To Property ID"
+    },
+    "to_property_name": {
+      "type": "string",
+      "title": "To Property Name"
+    },
+    "to_room_id": {
+      "type": "string",
+      "title": "To Room ID"
+    },
+    "to_room_name": {
+      "type": "string",
+      "title": "To Room Name"
+    },
+    "to_bed_id": {
+      "type": "string",
+      "title": "To Bed ID"
+    },
+    "to_bed_label": {
+      "type": "string",
+      "title": "To Bed Label"
+    },
+    "transfer_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Transfer Date"
+    },
+    "transfer_reason": {
+      "type": "string",
+      "enum": [
+        "resident_request",
+        "staff_assignment",
+        "capacity_management",
+        "behavioral",
+        "medical",
+        "compatibility",
+        "other"
+      ],
+      "title": "Transfer Reason"
+    },
+    "initiated_by_email": {
+      "type": "string",
+      "title": "Initiated By Email"
+    },
+    "initiated_by_name": {
+      "type": "string",
+      "title": "Initiated By Name"
+    },
+    "transfer_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "completed",
+        "cancelled"
+      ],
+      "default": "completed",
+      "title": "Transfer Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "resident_id",
+    "from_property_id",
+    "to_property_id",
+    "transfer_date",
+    "transfer_reason"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_staff"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_staff"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

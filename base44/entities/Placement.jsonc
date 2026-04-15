@@ -1,0 +1,157 @@
+{
+  "name": "Placement",
+  "type": "object",
+  "properties": {
+    "resident_id": {
+      "type": "string",
+      "title": "Resident ID",
+      "description": "Link to HousingResident entity"
+    },
+    "resident_name": {
+      "type": "string",
+      "title": "Resident Name"
+    },
+    "property_id": {
+      "type": "string",
+      "title": "Property ID"
+    },
+    "property_name": {
+      "type": "string",
+      "title": "Property Name"
+    },
+    "room_id": {
+      "type": "string",
+      "title": "Room ID"
+    },
+    "room_name": {
+      "type": "string",
+      "title": "Room Name"
+    },
+    "bed_id": {
+      "type": "string",
+      "title": "Bed ID"
+    },
+    "bed_label": {
+      "type": "string",
+      "title": "Bed Label"
+    },
+    "move_in_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Move-In Date"
+    },
+    "expected_move_out_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Expected Move-Out Date"
+    },
+    "actual_move_out_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Actual Move-Out Date"
+    },
+    "placement_source": {
+      "type": "string",
+      "enum": [
+        "referral",
+        "direct",
+        "program",
+        "other"
+      ],
+      "title": "Placement Source"
+    },
+    "placement_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "active",
+        "transferred",
+        "exited",
+        "discharged"
+      ],
+      "title": "Placement Status"
+    },
+    "housing_model_type": {
+      "type": "string",
+      "enum": [
+        "per_bed",
+        "turnkey_house"
+      ],
+      "title": "Housing Model Type"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "title": "Is Active"
+    },
+    "internal_notes": {
+      "type": "string",
+      "title": "Internal Notes"
+    }
+  },
+  "required": [
+    "resident_id",
+    "property_id",
+    "move_in_date",
+    "placement_status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_staff"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_staff"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

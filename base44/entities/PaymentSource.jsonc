@@ -1,0 +1,182 @@
+{
+  "name": "PaymentSource",
+  "type": "object",
+  "properties": {
+    "placement_id": {
+      "type": "string",
+      "title": "Placement ID",
+      "description": "Link to Placement entity"
+    },
+    "resident_id": {
+      "type": "string",
+      "title": "Resident ID"
+    },
+    "resident_name": {
+      "type": "string",
+      "title": "Resident Name"
+    },
+    "property_id": {
+      "type": "string",
+      "title": "Property ID"
+    },
+    "payer_type": {
+      "type": "string",
+      "enum": [
+        "self_pay",
+        "nonprofit",
+        "organization",
+        "sponsor",
+        "family",
+        "government",
+        "contract_client",
+        "other"
+      ],
+      "title": "Payer Type"
+    },
+    "payer_name": {
+      "type": "string",
+      "title": "Payer Name"
+    },
+    "payer_contact_name": {
+      "type": "string",
+      "title": "Payer Contact Name"
+    },
+    "payer_email": {
+      "type": "string",
+      "title": "Payer Email"
+    },
+    "payer_phone": {
+      "type": "string",
+      "title": "Payer Phone"
+    },
+    "responsible_party": {
+      "type": "string",
+      "title": "Responsible Party Name"
+    },
+    "monthly_amount": {
+      "type": "number",
+      "title": "Monthly Amount",
+      "description": "Expected monthly payment from this payer"
+    },
+    "weekly_amount": {
+      "type": "number",
+      "title": "Weekly Amount"
+    },
+    "one_time_fees": {
+      "type": "number",
+      "title": "One-Time Fees"
+    },
+    "payment_schedule": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "weekly",
+        "bi_weekly",
+        "one_time",
+        "custom"
+      ],
+      "title": "Payment Schedule"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "check",
+        "ach",
+        "credit_card",
+        "invoice",
+        "cash",
+        "other"
+      ],
+      "title": "Payment Method"
+    },
+    "is_primary_payer": {
+      "type": "boolean",
+      "default": false,
+      "title": "Is Primary Payer"
+    },
+    "payment_percentage": {
+      "type": "number",
+      "title": "Payment Percentage",
+      "description": "If hybrid, what % of total this payer covers (0-100)"
+    },
+    "billing_notes": {
+      "type": "string",
+      "title": "Billing Notes"
+    },
+    "payment_source_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "pending_approval",
+        "cancelled"
+      ],
+      "default": "active",
+      "title": "Status"
+    }
+  },
+  "required": [
+    "placement_id",
+    "payer_type",
+    "payer_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "billing_staff"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "billing_staff"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "billing_staff"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

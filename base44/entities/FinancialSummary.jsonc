@@ -1,0 +1,169 @@
+{
+  "name": "FinancialSummary",
+  "type": "object",
+  "properties": {
+    "summary_type": {
+      "type": "string",
+      "enum": [
+        "house_monthly",
+        "house_ytd",
+        "portfolio_monthly",
+        "portfolio_ytd"
+      ],
+      "title": "Summary Type"
+    },
+    "property_id": {
+      "type": "string",
+      "title": "Property ID",
+      "description": "Null for portfolio-level"
+    },
+    "property_name": {
+      "type": "string",
+      "title": "Property Name"
+    },
+    "report_month": {
+      "type": "string",
+      "title": "Report Month",
+      "description": "YYYY-MM format"
+    },
+    "occupancy_count": {
+      "type": "number",
+      "title": "Current Occupancy Count"
+    },
+    "total_capacity": {
+      "type": "number",
+      "title": "Total Bed Capacity"
+    },
+    "occupancy_percentage": {
+      "type": "number",
+      "title": "Occupancy Percentage"
+    },
+    "expected_monthly_revenue": {
+      "type": "number",
+      "title": "Expected Monthly Revenue"
+    },
+    "invoiced_amount": {
+      "type": "number",
+      "title": "Invoiced Amount This Period"
+    },
+    "amount_received": {
+      "type": "number",
+      "title": "Amount Received"
+    },
+    "amount_outstanding": {
+      "type": "number",
+      "title": "Amount Outstanding"
+    },
+    "invoices_paid": {
+      "type": "number",
+      "title": "Invoices Paid"
+    },
+    "invoices_partial": {
+      "type": "number",
+      "title": "Invoices Partial"
+    },
+    "invoices_overdue": {
+      "type": "number",
+      "title": "Invoices Overdue"
+    },
+    "total_expenses_due": {
+      "type": "number",
+      "title": "Total Expenses Due This Period"
+    },
+    "expenses_paid": {
+      "type": "number",
+      "title": "Expenses Paid"
+    },
+    "lease_expense": {
+      "type": "number",
+      "title": "Monthly Lease/Rent Expense"
+    },
+    "other_expenses": {
+      "type": "number",
+      "title": "Other Monthly Expenses"
+    },
+    "net_profit_loss": {
+      "type": "number",
+      "title": "Net Profit/Loss This Period"
+    },
+    "profit_margin_percentage": {
+      "type": "number",
+      "title": "Profit Margin %"
+    },
+    "revenue_by_housing_model": {
+      "type": "string",
+      "title": "Revenue by Model (JSON)",
+      "description": "{per_bed: amount, turnkey_house: amount}"
+    },
+    "revenue_by_payer_type": {
+      "type": "string",
+      "title": "Revenue by Payer Type (JSON)"
+    },
+    "revenue_by_room": {
+      "type": "string",
+      "title": "Revenue by Room (JSON)"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Last Updated"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "summary_type",
+    "report_month"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "billing_staff"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "billing_staff"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "housing_admin"
+      }
+    }
+  }
+}

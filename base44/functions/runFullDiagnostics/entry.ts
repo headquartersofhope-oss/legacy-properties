@@ -10,7 +10,7 @@ Deno.serve(async (req) => {
     }
 
     // Fetch all entities
-    const [properties, leases, owners, amenities, beds, applications, residents, referrals, documents, occupancy] = await Promise.all([
+    const [properties, leases, owners, amenities, beds, applications, residents, referrals, documents, occupancy, placements, paymentSources, invoices, payments, expenses] = await Promise.all([
       base44.asServiceRole.entities.Property.list(),
       base44.asServiceRole.entities.Lease.list(),
       base44.asServiceRole.entities.PropertyOwner.list(),
@@ -21,6 +21,11 @@ Deno.serve(async (req) => {
       base44.asServiceRole.entities.Referral.list(),
       base44.asServiceRole.entities.Document.list(),
       base44.asServiceRole.entities.OccupancyRecord.list(),
+      base44.asServiceRole.entities.Placement.list(),
+      base44.asServiceRole.entities.PaymentSource.list(),
+      base44.asServiceRole.entities.Invoice.list(),
+      base44.asServiceRole.entities.Payment.list(),
+      base44.asServiceRole.entities.HouseExpense.list(),
     ]);
 
     const criticalIssues = [];
@@ -141,6 +146,62 @@ Deno.serve(async (req) => {
     });
 
     // ────────────────────────────────────────
+    // BILLING & FINANCIAL AUDIT
+    // ────────────────────────────────────────
+    const billingIssues = [];
+
+    // Check for residents without payment source
+    placements.forEach(p => {
+      const payers = paymentSources.filter(ps => ps.placement_id === p.id);
+      if (p.placement_status === 'active' && payers.length === 0) {
+        billingIssues.push(`Placement ${p.resident_name}: Active but no payment source configured`);
+      }
+    });
+
+    // Check for invoices missing amounts
+    invoices.forEach(inv => {
+      if (!inv.total_amount_due || inv.total_amount_due === 0) {
+        billingIssues.push(`Invoice ${inv.invoice_number}: Missing or zero amount`);
+      }
+      if (!inv.payer_name) {
+        billingIssues.push(`Invoice ${inv.invoice_number}: Missing payer name`);
+      }
+    });
+
+    // Check for payments not linked to invoice
+    payments.forEach(p => {
+      if (!p.invoice_id) {
+        billingIssues.push(`Payment ${p.id}: Not linked to invoice`);
+      }
+    });
+
+    // Check for hybrid payments with missing split amounts
+    const hybridPayments = paymentSources.filter(ps => ps.payment_percentage && ps.payment_percentage > 0 && ps.payment_percentage < 100);
+    hybridPayments.forEach(hp => {
+      if (!hp.monthly_amount) {
+        billingIssues.push(`PaymentSource ${hp.id}: Hybrid payment missing monthly amount`);
+      }
+    });
+
+    // Check for houses missing lease expense data
+    properties.forEach(prop => {
+      if (prop.house_status === 'active') {
+        const propExpenses = expenses.filter(e => e.property_id === prop.id && e.expense_category === 'lease_rent');
+        if (propExpenses.length === 0) {
+          billingIssues.push(`Property ${prop.property_name}: Active but no lease expense recorded`);
+        }
+      }
+    });
+
+    // Check for revenue without occupancy
+    invoices.forEach(inv => {
+      const invPlacements = placements.filter(p => p.property_id === inv.property_id && p.placement_status === 'active');
+      if (inv.total_amount_due > 0 && invPlacements.length === 0) {
+        warnings.push(`Property ${inv.property_name}: Invoiced but no active placements`);
+      }
+    });
+
+    // ────────────────────────────────────────
     // AUTOMATION READINESS
     // ────────────────────────────────────────
     const missingTriggers = [];
@@ -219,6 +280,7 @@ Deno.serve(async (req) => {
       next_steps: readinessStatus === 'ready' 
         ? 'Housing app is ready for Pathway integration. Test all workflows end-to-end.'
         : `Resolve ${criticalIssues.length} critical issues before production go-live.`,
+      billing_issues: billingIssues.slice(0, 15),
       summary: {
         properties_count: properties.length,
         leases_count: leases.length,
@@ -227,6 +289,13 @@ Deno.serve(async (req) => {
         residents_count: residents.length,
         referrals_count: referrals.length,
         documents_count: documents.length,
+        placements_count: placements.length,
+        active_payment_sources: paymentSources.filter(ps => ps.payment_source_status === 'active').length,
+        invoices_count: invoices.length,
+        payments_count: payments.length,
+        house_expenses_count: expenses.length,
+        invoices_outstanding: invoices.filter(i => i.invoice_status === 'outstanding' || i.invoice_status === 'overdue').length,
+        total_outstanding_balance: invoices.reduce((sum, i) => sum + (i.remaining_balance || 0), 0),
       }
     };
 
