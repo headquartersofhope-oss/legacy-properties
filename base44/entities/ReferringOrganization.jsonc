@@ -46,5 +46,91 @@
   "required": [
     "organization_name",
     "status"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_staff"
+          }
+        },
+        {
+          "_id": "{{user.data.referring_organization_id}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    }
+  }
 }

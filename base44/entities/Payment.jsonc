@@ -48,8 +48,7 @@
     },
     "reference_number": {
       "type": "string",
-      "title": "Reference Number",
-      "description": "Check number, ACH ref, transaction ID, etc."
+      "title": "Reference Number"
     },
     "is_partial": {
       "type": "boolean",
@@ -89,6 +88,11 @@
       "$or": [
         {
           "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
             "role": "housing_admin"
           }
         },
@@ -101,6 +105,11 @@
     },
     "read": {
       "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
         {
           "user_condition": {
             "role": "housing_admin"
@@ -122,6 +131,11 @@
       "$or": [
         {
           "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
             "role": "housing_admin"
           }
         },
@@ -133,9 +147,18 @@
       ]
     },
     "delete": {
-      "user_condition": {
-        "role": "housing_admin"
-      }
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        }
+      ]
     }
   }
 }

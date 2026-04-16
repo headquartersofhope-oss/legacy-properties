@@ -90,5 +90,89 @@
     "first_name",
     "last_name",
     "resident_status"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_staff"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_staff"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "created_by": "{{user.email}}"
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "created_by": "{{user.email}}"
+        }
+      ]
+    }
+  }
 }

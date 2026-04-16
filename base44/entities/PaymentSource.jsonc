@@ -55,8 +55,7 @@
     },
     "monthly_amount": {
       "type": "number",
-      "title": "Monthly Amount",
-      "description": "Expected monthly payment from this payer"
+      "title": "Monthly Amount"
     },
     "weekly_amount": {
       "type": "number",
@@ -96,8 +95,7 @@
     },
     "payment_percentage": {
       "type": "number",
-      "title": "Payment Percentage",
-      "description": "If hybrid, what % of total this payer covers (0-100)"
+      "title": "Payment Percentage"
     },
     "billing_notes": {
       "type": "string",
@@ -125,6 +123,11 @@
       "$or": [
         {
           "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
             "role": "housing_admin"
           }
         },
@@ -142,6 +145,11 @@
     },
     "read": {
       "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
         {
           "user_condition": {
             "role": "housing_admin"
@@ -163,6 +171,11 @@
       "$or": [
         {
           "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
             "role": "housing_admin"
           }
         },
@@ -174,9 +187,18 @@
       ]
     },
     "delete": {
-      "user_condition": {
-        "role": "housing_admin"
-      }
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        }
+      ]
     }
   }
 }

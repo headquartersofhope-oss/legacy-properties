@@ -70,5 +70,100 @@
     "bed_label",
     "bed_status",
     "status"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_staff"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "referral_partner"
+              }
+            },
+            {
+              "data.bed_status": "available"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_manager"
+          }
+        }
+      ]
+    }
+  }
 }

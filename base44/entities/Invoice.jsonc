@@ -86,8 +86,7 @@
     },
     "line_items": {
       "type": "string",
-      "title": "Line Items (JSON)",
-      "description": "Array of {description, amount, category} objects serialized as JSON"
+      "title": "Line Items (JSON)"
     },
     "subtotal": {
       "type": "number",
@@ -130,8 +129,7 @@
     },
     "document_link": {
       "type": "string",
-      "title": "Document Link",
-      "description": "Link to invoice PDF or document"
+      "title": "Document Link"
     },
     "notes": {
       "type": "string",
@@ -150,6 +148,11 @@
       "$or": [
         {
           "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
             "role": "housing_admin"
           }
         },
@@ -162,6 +165,11 @@
     },
     "read": {
       "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
         {
           "user_condition": {
             "role": "housing_admin"
@@ -183,6 +191,11 @@
       "$or": [
         {
           "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
             "role": "housing_admin"
           }
         },
@@ -194,9 +207,18 @@
       ]
     },
     "delete": {
-      "user_condition": {
-        "role": "housing_admin"
-      }
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        }
+      ]
     }
   }
 }

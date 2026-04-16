@@ -5,7 +5,7 @@ import {
   Home, Building2, DoorOpen, BedDouble, FileText, Users, UserCheck,
   ClipboardList, FolderOpen, AlertTriangle, ShieldCheck, DollarSign,
   Building, BarChart3, Settings, Menu, X, LogOut, ChevronRight, Zap, Grid3X3,
-  Send, LayoutGrid, Layers, Network
+  Send, LayoutGrid, Layers, Network, ArrowRightLeft
 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
@@ -33,6 +33,7 @@ const internalNav = [
       { label: 'Applicants', path: '/applicants', icon: Users },
       { label: 'Residents', path: '/residents', icon: UserCheck },
       { label: 'Occupancy', path: '/occupancy', icon: ClipboardList },
+      { label: 'Move Requests', path: '/move-requests', icon: ArrowRightLeft },
     ]
   },
   {
