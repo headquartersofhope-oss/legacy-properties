@@ -116,6 +116,11 @@
       "format": "date",
       "title": "Completed Date"
     },
+    "turnkey_client_id": {
+      "type": "string",
+      "title": "Turnkey Client ID",
+      "description": "Set if this move was initiated by a turnkey operator"
+    },
     "notes": {
       "type": "string",
       "title": "Notes"
@@ -151,6 +156,11 @@
           "user_condition": {
             "role": "housing_staff"
           }
+        },
+        {
+          "user_condition": {
+            "role": "turnkey_operator"
+          }
         }
       ]
     },
@@ -175,6 +185,11 @@
           "user_condition": {
             "role": "housing_staff"
           }
+        },
+        {
+          "user_condition": {
+            "role": "turnkey_operator"
+          }
         }
       ]
     },
@@ -193,6 +208,11 @@
         {
           "user_condition": {
             "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "turnkey_operator"
           }
         }
       ]

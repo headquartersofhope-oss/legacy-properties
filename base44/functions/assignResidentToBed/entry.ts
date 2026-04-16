@@ -6,6 +6,11 @@ Deno.serve(async (req) => {
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
+    const ALLOWED_ROLES = ['admin', 'housing_admin', 'housing_manager', 'housing_staff', 'turnkey_operator'];
+    if (!ALLOWED_ROLES.includes(user.role)) {
+      return Response.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
     const body = await req.json();
     const { resident_id, property_id, room_id, bed_id, move_in_date } = body;
 
@@ -13,7 +18,24 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'resident_id, property_id, and bed_id are required' }, { status: 400 });
     }
 
-    // Validate bed is available
+    // House-scope enforcement for turnkey operators
+    if (user.role === 'turnkey_operator') {
+      const clients = await base44.asServiceRole.entities.TurnkeyClient.list();
+      const myClient = clients.find(c => {
+        const emails = (c.operator_user_emails || '').split(',').map(e => e.trim().toLowerCase());
+        return emails.includes(user.email.toLowerCase());
+      });
+      if (!myClient) return Response.json({ error: 'No turnkey client record found for your account' }, { status: 403 });
+
+      const authorizedIds = [];
+      if (myClient.property_ids) myClient.property_ids.split(',').map(s => s.trim()).filter(Boolean).forEach(id => authorizedIds.push(id));
+      if (myClient.property_id) authorizedIds.push(myClient.property_id);
+
+      if (!authorizedIds.includes(property_id)) {
+        return Response.json({ error: 'You are not authorized to assign beds in this property' }, { status: 403 });
+      }
+    }
+
     const bed = await base44.asServiceRole.entities.Bed.get(bed_id);
     if (!bed) return Response.json({ error: 'Bed not found' }, { status: 404 });
     if (bed.bed_status !== 'available') {
@@ -31,13 +53,11 @@ Deno.serve(async (req) => {
     const existing = await base44.asServiceRole.entities.OccupancyRecord.filter({ housing_resident_id: resident_id, occupancy_status: 'active' });
     for (const occ of existing) {
       await base44.asServiceRole.entities.OccupancyRecord.update(occ.id, { occupancy_status: 'ended', end_date: today });
-      // Release old bed
       if (occ.bed_id) {
         await base44.asServiceRole.entities.Bed.update(occ.bed_id, { bed_status: 'available', current_resident_id: '' });
       }
     }
 
-    // Update resident record
     await base44.asServiceRole.entities.HousingResident.update(resident_id, {
       site_id: property_id,
       site_name: property?.property_name || '',
@@ -49,13 +69,11 @@ Deno.serve(async (req) => {
       resident_status: 'active',
     });
 
-    // Mark bed as occupied
     await base44.asServiceRole.entities.Bed.update(bed_id, {
       bed_status: 'occupied',
       current_resident_id: resident_id,
     });
 
-    // Create occupancy record
     await base44.asServiceRole.entities.OccupancyRecord.create({
       housing_resident_id: resident_id,
       resident_name: `${resident.first_name} ${resident.last_name}`,

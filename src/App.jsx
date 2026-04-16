@@ -32,6 +32,7 @@ import IntegrationReadiness from './pages/IntegrationReadiness';
 import HousingModels from './pages/HousingModels';
 import PathwayIntegration from './pages/PathwayIntegration';
 import OperationalAudit from './pages/OperationalAudit';
+import TurnkeyDashboard from './pages/TurnkeyDashboard';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -82,6 +83,7 @@ const AuthenticatedApp = () => {
         <Route path="/housing-models" element={<HousingModels />} />
         <Route path="/pathway-integration" element={<PathwayIntegration />} />
         <Route path="/operational-audit" element={<OperationalAudit />} />
+        <Route path="/turnkey" element={<TurnkeyDashboard />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

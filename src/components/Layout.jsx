@@ -72,8 +72,17 @@ const partnerNav = [
   },
 ];
 
+const turnkeyNav = [
+  {
+    section: 'MY HOUSE',
+    items: [
+      { label: 'House Dashboard', path: '/turnkey', icon: Home },
+    ]
+  },
+];
+
 export default function Layout() {
-  const { user, loading, isInternal, isPartner } = useCurrentUser();
+  const { user, loading, isInternal, isPartner, isTurnkeyOperator } = useCurrentUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
@@ -87,7 +96,7 @@ export default function Layout() {
 
   // Security: only show nav items the user's role is entitled to.
   // Unknown / unauthenticated roles get an empty nav.
-  const filteredNav = isPartner ? partnerNav : (isInternal ? internalNav : []);
+  const filteredNav = isTurnkeyOperator ? turnkeyNav : (isPartner ? partnerNav : (isInternal ? internalNav : []));
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
@@ -104,7 +113,7 @@ export default function Layout() {
           </div>
           <div>
             <h1 className="text-sm font-semibold text-sidebar-accent-foreground">Housing Ops</h1>
-            <p className="text-[11px] text-sidebar-foreground/60">{isPartner ? 'Partner Portal' : 'Operations'}</p>
+            <p className="text-[11px] text-sidebar-foreground/60">{isTurnkeyOperator ? 'Operator Portal' : isPartner ? 'Partner Portal' : 'Operations'}</p>
           </div>
           <button className="lg:hidden ml-auto" onClick={() => setSidebarOpen(false)}>
             <X className="w-5 h-5" />

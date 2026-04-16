@@ -30,10 +30,14 @@
       "type": "string",
       "title": "Contact Phone"
     },
+    "operator_user_emails": {
+      "type": "string",
+      "title": "Operator User Emails (comma-separated)",
+      "description": "Email addresses of users with turnkey_operator role who can manage this client's houses"
+    },
     "contract_reference": {
       "type": "string",
-      "title": "Contract/Agreement Reference",
-      "description": "Link to contract document or agreement ID"
+      "title": "Contract/Agreement Reference"
     },
     "lease_start_date": {
       "type": "string",
@@ -58,13 +62,16 @@
     },
     "billing_relationship": {
       "type": "string",
-      "title": "Billing Relationship",
-      "description": "e.g., monthly fee, per-placement, cost-plus, etc."
+      "title": "Billing Relationship"
+    },
+    "property_ids": {
+      "type": "string",
+      "title": "Assigned Property IDs (comma-separated)",
+      "description": "All property IDs this operator is authorized to manage"
     },
     "property_id": {
       "type": "string",
-      "title": "Primary Property ID",
-      "description": "Main property this client operates (if single-property)"
+      "title": "Primary Property ID"
     },
     "property_name": {
       "type": "string",
@@ -72,18 +79,26 @@
     },
     "current_occupancy_count": {
       "type": "number",
-      "title": "Current Occupancy Count",
-      "description": "How many people currently in the house"
+      "title": "Current Occupancy Count"
     },
     "authorized_occupancy_count": {
       "type": "number",
-      "title": "Authorized Occupancy Count",
-      "description": "Max allowed per lease/contract"
+      "title": "Authorized Occupancy Count"
+    },
+    "self_approve_moves": {
+      "type": "boolean",
+      "default": true,
+      "title": "Self-Approve Internal Moves",
+      "description": "If true, turnkey operator can approve and execute their own move requests within their house"
+    },
+    "pathway_org_id": {
+      "type": "string",
+      "title": "Pathway Organization ID",
+      "description": "ID used for syncing placements to Pathway system"
     },
     "use_case_notes": {
       "type": "string",
-      "title": "Use Case / Program Notes",
-      "description": "How client is using the house, program type, any special arrangements"
+      "title": "Use Case / Program Notes"
     },
     "internal_notes": {
       "type": "string",
@@ -125,6 +140,11 @@
         {
           "user_condition": {
             "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "turnkey_operator"
           }
         }
       ]
