@@ -4,7 +4,9 @@ import useCurrentUser from '@/lib/useCurrentUser';
 import PageHeader from '@/components/PageHeader';
 import StatusBadge from '@/components/StatusBadge';
 import AccessDenied from '@/components/AccessDenied';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import BedAssignment from '@/components/BedAssignment';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronRight, UserPlus } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function Rooms() {
@@ -16,20 +18,22 @@ export default function Rooms() {
   const [expandedRooms, setExpandedRooms] = useState({});
   const [filterSite, setFilterSite] = useState('all');
   const [filterStatus, setFilterStatus] = useState('all');
+  const [assigningBed, setAssigningBed] = useState(null);
+
+  const load = async () => {
+    const [roomsRes, bedsRes, propsRes] = await Promise.all([
+      base44.entities.Room.list(),
+      base44.entities.Bed.list(),
+      base44.entities.Property.list(),
+    ]);
+    setRooms(roomsRes || []);
+    setBeds(bedsRes || []);
+    setProperties(propsRes || []);
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (!user) return;
-    const load = async () => {
-      const [roomsRes, bedsRes, propsRes] = await Promise.all([
-        base44.entities.Room.list(),
-        base44.entities.Bed.list(),
-        base44.entities.Property.list(),
-      ]);
-      setRooms(roomsRes || []);
-      setBeds(bedsRes || []);
-      setProperties(propsRes || []);
-      setLoading(false);
-    };
     load();
   }, [user]);
 
@@ -114,6 +118,15 @@ export default function Rooms() {
                             <div className="font-semibold">{bed.bed_label}</div>
                             <div className="capitalize mt-0.5">{bed.bed_status?.replace('_', ' ')}</div>
                             {bed.bed_type && <div className="text-[10px] mt-0.5 opacity-70">{bed.bed_type}</div>}
+                            {bed.bed_status === 'available' && (
+                              <Button
+                                size="sm"
+                                className="w-full mt-2 h-6 text-[11px] gap-1 px-1"
+                                onClick={(e) => { e.stopPropagation(); setAssigningBed(bed); }}
+                              >
+                                <UserPlus className="w-3 h-3" /> Assign
+                              </Button>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -125,6 +138,14 @@ export default function Rooms() {
             );
           })}
         </div>
+      )}
+
+      {assigningBed && (
+        <BedAssignment
+          bed={assigningBed}
+          onClose={() => setAssigningBed(null)}
+          onSuccess={() => { setAssigningBed(null); load(); }}
+        />
       )}
     </div>
   );

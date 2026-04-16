@@ -40,9 +40,9 @@ export default function Residents() {
     {
       header: 'Actions',
       cell: (r) => (
-        r.resident_status === 'active' && !r.bed_id ? (
+        ['active', 'pending_move_in'].includes(r.resident_status) ? (
           <Button size="sm" variant="outline" onClick={(e) => { e.stopPropagation(); setAssigningResident(r); }}>
-            Assign Bed
+            {r.bed_id ? 'Reassign Bed' : 'Assign Bed'}
           </Button>
         ) : null
       )
@@ -78,6 +78,7 @@ export default function Residents() {
           resident={assigningResident}
           onClose={() => setAssigningResident(null)}
           onSuccess={() => { setAssigningResident(null); load(); }}
+          onAssigned={() => { setAssigningResident(null); load(); }}
         />
       )}
     </div>

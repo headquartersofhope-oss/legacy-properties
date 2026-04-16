@@ -5,6 +5,8 @@ import PageHeader from '@/components/PageHeader';
 import StatusBadge from '@/components/StatusBadge';
 import AccessDenied from '@/components/AccessDenied';
 import DataTable from '@/components/DataTable';
+import BedAssignment from '@/components/BedAssignment';
+import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function Beds() {
@@ -14,6 +16,7 @@ export default function Beds() {
   const [loading, setLoading] = useState(true);
   const [filterSite, setFilterSite] = useState('all');
   const [filterStatus, setFilterStatus] = useState('all');
+  const [assigningBed, setAssigningBed] = useState(null);
 
   useEffect(() => {
     if (!user) return;
@@ -27,6 +30,7 @@ export default function Beds() {
       setLoading(false);
     };
     load();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   if (!isInternal) return <AccessDenied />;
@@ -37,14 +41,25 @@ export default function Beds() {
     return true;
   });
 
+  const reloadBeds = async () => {
+    const res = await base44.entities.Bed.list();
+    setBeds(res || []);
+  };
+
   const columns = [
     { header: 'Bed Label', accessor: 'bed_label' },
     { header: 'Room', accessor: 'room_name' },
     { header: 'Property', accessor: 'site_name' },
     { header: 'Type', cell: (row) => <span className="capitalize text-xs">{row.bed_type?.replace('_', ' ') || '—'}</span> },
     { header: 'Status', cell: (row) => <StatusBadge status={row.bed_status} /> },
-    { header: 'Active', cell: (row) => <StatusBadge status={row.status} /> },
-    { header: 'Notes', cell: (row) => <span className="text-xs text-muted-foreground">{row.notes || '—'}</span> },
+    {
+      header: 'Actions',
+      cell: (row) => row.bed_status === 'available' && row.status === 'active' ? (
+        <Button size="sm" variant="outline" className="h-7 text-xs gap-1" onClick={(e) => { e.stopPropagation(); setAssigningBed(row); }}>
+          Assign
+        </Button>
+      ) : null
+    },
   ];
 
   const available = beds.filter(b => b.bed_status === 'available').length;
@@ -78,6 +93,14 @@ export default function Beds() {
         <div className="text-center py-12 text-muted-foreground">Loading...</div>
       ) : (
         <DataTable columns={columns} data={filteredBeds} emptyMessage="No beds found." />
+      )}
+
+      {assigningBed && (
+        <BedAssignment
+          bed={assigningBed}
+          onClose={() => setAssigningBed(null)}
+          onSuccess={() => { setAssigningBed(null); reloadBeds(); }}
+        />
       )}
     </div>
   );
