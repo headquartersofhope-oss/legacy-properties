@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
+import AppAssistant from "@/components/AppAssistant";
 
 const internalNav = [
   {
@@ -179,6 +180,9 @@ export default function Layout() {
           <Outlet />
         </main>
       </div>
+
+      {/* App Assistant (internal users only) */}
+      {isInternal && <AppAssistant />}
     </div>
   );
 }
