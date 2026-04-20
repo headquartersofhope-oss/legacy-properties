@@ -1,0 +1,88 @@
+{
+  "name": "AuditLog",
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "type": "string",
+      "title": "Event Type"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failure",
+        "warning"
+      ],
+      "title": "Status"
+    },
+    "source_function": {
+      "type": "string",
+      "title": "Source Function"
+    },
+    "related_entity": {
+      "type": "string",
+      "title": "Related Entity"
+    },
+    "related_entity_id": {
+      "type": "string",
+      "title": "Related Entity ID"
+    },
+    "message": {
+      "type": "string",
+      "title": "Message"
+    },
+    "details": {
+      "type": "string",
+      "title": "Details (JSON)"
+    },
+    "notified_admin": {
+      "type": "boolean",
+      "title": "Admin Notified",
+      "default": false
+    }
+  },
+  "required": [
+    "event_type",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

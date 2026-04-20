@@ -87,6 +87,87 @@ Deno.serve(async (req) => {
       occupancy_status: 'active',
     });
 
+    // ── Pathways Hub Webhook ──────────────────────────────────────────────────
+    // Fire-and-forget: webhook failure must NEVER fail the bed assignment
+    (async () => {
+      const PATHWAYS_WEBHOOK_URL = 'https://api.base44.com/api/apps/69da82da88110c360468da13/functions/legacyBedAssignedWebhook';
+      const LEGACY_SECRET = 'HOH-LEGACY-2026-X9mK#vPw$qR7nTz';
+
+      try {
+        const webhookPayload = {
+          external_referral_id: resident.external_referral_id || null,
+          house_name: property?.property_name || '',
+          room_name: room?.room_name || bed.room_name || '',
+          bed_label: bed.bed_label,
+          move_in_date: today,
+          provider_notes: 'Placement confirmed by Legacy Properties operations team',
+          legacy_secret: LEGACY_SECRET,
+        };
+
+        const webhookRes = await fetch(PATHWAYS_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(webhookPayload),
+        });
+
+        if (!webhookRes.ok) {
+          const errBody = await webhookRes.text();
+          throw new Error(`Webhook responded with ${webhookRes.status}: ${errBody}`);
+        }
+
+        // Log success
+        await base44.asServiceRole.entities.AuditLog.create({
+          event_type: 'pathways_webhook_fired',
+          status: 'success',
+          source_function: 'assignResidentToBed',
+          related_entity: 'HousingResident',
+          related_entity_id: resident_id,
+          message: `Pathways Hub webhook delivered for ${resident.first_name} ${resident.last_name} → ${bed.bed_label}`,
+          details: JSON.stringify({ webhookPayload, http_status: webhookRes.status }),
+          notified_admin: false,
+        });
+
+      } catch (webhookErr) {
+        // Log failure and notify admin via email — bed assignment already succeeded
+        const errorDetails = JSON.stringify({
+          error: webhookErr.message,
+          resident_id,
+          bed_id,
+          property_id,
+          move_in_date: today,
+        });
+
+        await base44.asServiceRole.entities.AuditLog.create({
+          event_type: 'pathways_webhook_failed',
+          status: 'failure',
+          source_function: 'assignResidentToBed',
+          related_entity: 'HousingResident',
+          related_entity_id: resident_id,
+          message: `Pathways Hub webhook FAILED for ${resident.first_name} ${resident.last_name} → ${bed.bed_label}: ${webhookErr.message}`,
+          details: errorDetails,
+          notified_admin: true,
+        });
+
+        // Alert admin users via email
+        try {
+          const adminUsers = await base44.asServiceRole.entities.User.filter({ role: 'admin' });
+          for (const admin of adminUsers) {
+            if (admin.email) {
+              await base44.asServiceRole.integrations.Core.SendEmail({
+                to: admin.email,
+                subject: '[ALERT] Pathways Hub Webhook Failed — Manual Follow-Up Required',
+                body: `A bed assignment succeeded but the Pathways Hub webhook notification FAILED.\n\nResident: ${resident.first_name} ${resident.last_name}\nProperty: ${property?.property_name || property_id}\nBed: ${bed.bed_label}\nMove-in Date: ${today}\n\nError: ${webhookErr.message}\n\nPlease follow up manually to confirm placement in Pathways Hub.\n\nFull details logged in AuditLog.`,
+              });
+            }
+          }
+        } catch (emailErr) {
+          // Email failure is silent — AuditLog record already captures the webhook failure
+          console.error('Admin email notification failed:', emailErr.message);
+        }
+      }
+    })();
+    // ── End Pathways Hub Webhook ──────────────────────────────────────────────
+
     return Response.json({ success: true, message: `${resident.first_name} ${resident.last_name} assigned to ${bed.bed_label}` });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

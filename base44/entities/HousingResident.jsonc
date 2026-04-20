@@ -6,6 +6,11 @@
       "type": "string",
       "title": "Applicant ID"
     },
+    "external_referral_id": {
+      "type": "string",
+      "title": "External Referral ID",
+      "description": "ID used for syncing with external systems such as Pathways Hub"
+    },
     "first_name": {
       "type": "string",
       "title": "First Name"
