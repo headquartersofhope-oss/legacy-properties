@@ -108,12 +108,12 @@ export default function Layout() {
 
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-sidebar text-sidebar-foreground flex flex-col transition-transform duration-200 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
-        <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border">
-          <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center">
-            <Building2 className="w-4 h-4 text-sidebar-primary-foreground" />
+        <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border bg-gradient-to-r from-primary/10 to-transparent">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center font-bold text-sm">
+            LP
           </div>
           <div>
-            <h1 className="text-sm font-semibold text-sidebar-accent-foreground">Housing Ops</h1>
+            <h1 className="text-sm font-bold text-primary">Legacy Properties</h1>
             <p className="text-[11px] text-sidebar-foreground/60">{isTurnkeyOperator ? 'Operator Portal' : isPartner ? 'Partner Portal' : 'Operations'}</p>
           </div>
           <button className="lg:hidden ml-auto" onClick={() => setSidebarOpen(false)}>
@@ -138,7 +138,7 @@ export default function Layout() {
                       onClick={() => setSidebarOpen(false)}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-[13px] font-medium transition-all duration-150 ${
                         active
-                          ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-sm'
+                          ? 'bg-sidebar-primary text-white shadow-lg border-l-2 border-primary'
                           : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground'
                       }`}
                     >

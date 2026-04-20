@@ -1,27 +1,27 @@
 const statusColors = {
   // Bed status
-  available: 'bg-green-100 text-green-700',
-  occupied: 'bg-blue-100 text-blue-700',
-  needs_cleaning: 'bg-amber-100 text-amber-700',
-  reserved: 'bg-purple-100 text-purple-700',
-  out_of_service: 'bg-gray-100 text-gray-700',
+  available: 'bg-accent-emerald/20 text-accent-emerald border border-accent-emerald/30',
+  occupied: 'bg-accent-rose/20 text-accent-rose border border-accent-rose/30',
+  needs_cleaning: 'bg-accent-amber/20 text-accent-amber border border-accent-amber/30',
+  reserved: 'bg-accent-blue/20 text-accent-blue border border-accent-blue/30',
+  out_of_service: 'bg-accent-slate/20 text-accent-slate border border-accent-slate/30',
   // General
-  active: 'bg-green-100 text-green-700',
-  inactive: 'bg-gray-100 text-gray-700',
-  under_maintenance: 'bg-orange-100 text-orange-700',
-  pending_approval: 'bg-yellow-100 text-yellow-700',
+  active: 'bg-accent-emerald/20 text-accent-emerald border border-accent-emerald/30',
+  inactive: 'bg-accent-slate/20 text-accent-slate border border-accent-slate/30',
+  under_maintenance: 'bg-accent-amber/20 text-accent-amber border border-accent-amber/30',
+  pending_approval: 'bg-accent-amber/20 text-accent-amber border border-accent-amber/30',
   // Referral
-  draft: 'bg-gray-100 text-gray-700',
-  submitted: 'bg-blue-100 text-blue-700',
-  received: 'bg-sky-100 text-sky-700',
-  under_review: 'bg-amber-100 text-amber-700',
-  more_information_requested: 'bg-orange-100 text-orange-700',
-  approved: 'bg-green-100 text-green-700',
-  denied: 'bg-red-100 text-red-700',
-  waitlisted: 'bg-purple-100 text-purple-700',
-  withdrawn: 'bg-gray-100 text-gray-700',
-  admitted: 'bg-emerald-100 text-emerald-700',
-  closed: 'bg-slate-100 text-slate-700',
+  draft: 'bg-accent-slate/20 text-accent-slate border border-accent-slate/30',
+  submitted: 'bg-accent-blue/20 text-accent-blue border border-accent-blue/30',
+  received: 'bg-accent-blue/20 text-accent-blue border border-accent-blue/30',
+  under_review: 'bg-accent-amber/20 text-accent-amber border border-accent-amber/30',
+  more_information_requested: 'bg-accent-amber/20 text-accent-amber border border-accent-amber/30',
+  approved: 'bg-accent-emerald/20 text-accent-emerald border border-accent-emerald/30',
+  denied: 'bg-accent-rose/20 text-accent-rose border border-accent-rose/30',
+  waitlisted: 'bg-primary/20 text-primary border border-primary/30',
+  withdrawn: 'bg-accent-slate/20 text-accent-slate border border-accent-slate/30',
+  admitted: 'bg-accent-emerald/20 text-accent-emerald border border-accent-emerald/30',
+  closed: 'bg-accent-slate/20 text-accent-slate border border-accent-slate/30',
   // Applicant
   new: 'bg-blue-100 text-blue-700',
   screening: 'bg-amber-100 text-amber-700',
@@ -81,7 +81,7 @@ export default function StatusBadge({ status }) {
   const colors = statusColors[status] || 'bg-gray-100 text-gray-700';
   const label = status.replace(/_/g, ' ');
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium capitalize ${colors}`}>
+    <span className={`inline-flex items-center px-2 py-1 rounded text-[11px] font-semibold capitalize ${colors}`}>
       {label}
     </span>
   );
