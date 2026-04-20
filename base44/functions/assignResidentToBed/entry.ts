@@ -54,7 +54,7 @@ Deno.serve(async (req) => {
     for (const occ of existing) {
       await base44.asServiceRole.entities.OccupancyRecord.update(occ.id, { occupancy_status: 'ended', end_date: today });
       if (occ.bed_id) {
-        await base44.asServiceRole.entities.Bed.update(occ.bed_id, { bed_status: 'available', current_resident_id: '' });
+        await base44.asServiceRole.entities.Bed.update(occ.bed_id, { bed_status: 'needs_cleaning', current_resident_id: '', cleaning_started_at: new Date().toISOString() });
       }
     }
 

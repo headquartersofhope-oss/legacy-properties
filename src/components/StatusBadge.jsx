@@ -2,6 +2,7 @@ const statusColors = {
   // Bed status
   available: 'bg-green-100 text-green-700',
   occupied: 'bg-blue-100 text-blue-700',
+  needs_cleaning: 'bg-amber-100 text-amber-700',
   reserved: 'bg-purple-100 text-purple-700',
   out_of_service: 'bg-gray-100 text-gray-700',
   // General

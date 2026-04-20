@@ -27,6 +27,7 @@
       "enum": [
         "available",
         "occupied",
+        "needs_cleaning",
         "reserved",
         "out_of_service"
       ],
@@ -58,6 +59,11 @@
     "current_resident_id": {
       "type": "string",
       "title": "Current Resident ID"
+    },
+    "cleaning_started_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Cleaning Started At"
     },
     "notes": {
       "type": "string",
@@ -142,6 +148,11 @@
         {
           "user_condition": {
             "role": "housing_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "housing_staff"
           }
         }
       ]

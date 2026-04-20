@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import useCurrentUser from '@/lib/useCurrentUser';
 import PageHeader from '@/components/PageHeader';
 import HouseCard from '@/components/HouseCard';
-import { BarChart3, TrendingUp, AlertCircle, CheckCircle } from 'lucide-react';
+import { BarChart3, TrendingUp, AlertCircle, Sparkles } from 'lucide-react';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ export default function Dashboard() {
   const [referrals, setReferrals] = useState([]);
   const [occupancy, setOccupancy] = useState([]);
   const [rooms, setRooms] = useState([]);
+  const [beds, setBeds] = useState([]);
   const [moveRequests, setMoveRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,18 +22,20 @@ export default function Dashboard() {
       try {
         setLoading(true);
         if (isInternal) {
-          const [propsRes, refsRes, occRes, roomsRes, moveRes] = await Promise.all([
+          const [propsRes, refsRes, occRes, roomsRes, moveRes, bedsRes] = await Promise.all([
             base44.entities.Property.list(),
             base44.entities.HousingApplication.list(),
             base44.entities.OccupancyRecord.list(),
             base44.entities.Room.list(),
             base44.entities.MoveRequest.list(),
+            base44.entities.Bed.list(),
           ]);
           setProperties(propsRes || []);
           setReferrals(refsRes || []);
           setOccupancy(occRes || []);
           setRooms(roomsRes || []);
           setMoveRequests(moveRes || []);
+          setBeds(bedsRes || []);
         }
       } catch (error) {
         console.error('Dashboard load error:', error);
@@ -62,6 +65,7 @@ export default function Dashboard() {
   const pendingReferrals = referrals.filter((r) => r.application_status === 'under_review' || r.application_status === 'pending_documents').length;
   const totalRooms = rooms.filter(r => r.status === 'active').length;
   const pendingMoves = moveRequests.filter(r => r.request_status === 'submitted' || r.request_status === 'under_review' || r.request_status === 'approved').length;
+  const needsCleaningCount = beds.filter(b => b.bed_status === 'needs_cleaning').length;
 
   const handleNavigate = (path, filters) => {
     sessionStorage.setItem('navigationFilters', JSON.stringify(filters));
@@ -111,7 +115,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
             <div onClick={() => handleNavigate('/properties', { occupancy_level: 'full' })} className="bg-card border-2 border-border rounded-lg p-4 shadow-sm hover:shadow-lg hover:border-red-400 transition-all cursor-pointer group">
               <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> At Capacity</div>
               <div className="text-2xl font-bold text-red-600 group-hover:text-red-700 transition-colors">{fullHouses}</div>
@@ -121,6 +125,14 @@ export default function Dashboard() {
               <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> Near Capacity</div>
               <div className="text-2xl font-bold text-amber-600 group-hover:text-amber-700 transition-colors">{nearCapacity}</div>
               <div className="text-[10px] text-muted-foreground mt-2">80%+ occupied</div>
+            </div>
+            <div
+              onClick={() => handleNavigate('/beds', { status: 'needs_cleaning' })}
+              className={`bg-card border-2 rounded-lg p-4 shadow-sm hover:shadow-lg transition-all cursor-pointer group ${needsCleaningCount > 0 ? 'border-amber-300 bg-amber-50 hover:border-amber-500' : 'border-border hover:border-amber-400'}`}
+            >
+              <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1"><Sparkles className="w-3 h-3" /> Needs Cleaning</div>
+              <div className={`text-2xl font-bold transition-colors ${needsCleaningCount > 0 ? 'text-amber-600 group-hover:text-amber-700' : 'text-foreground group-hover:text-amber-500'}`}>{needsCleaningCount}</div>
+              <div className="text-[10px] text-muted-foreground mt-2">Beds pending turnover</div>
             </div>
             <div onClick={() => handleNavigate('/referrals', { status: 'under_review' })} className="bg-card border-2 border-border rounded-lg p-4 shadow-sm hover:shadow-lg hover:border-sky-400 transition-all cursor-pointer group">
               <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> Pending</div>
