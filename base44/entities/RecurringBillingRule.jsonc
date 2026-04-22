@@ -1,0 +1,63 @@
+{
+  "name": "RecurringBillingRule",
+  "type": "object",
+  "properties": {
+    "rule_name": {
+      "type": "string",
+      "title": "Rule Name"
+    },
+    "billing_type": {
+      "type": "string",
+      "enum": [
+        "resident_weekly",
+        "resident_monthly",
+        "partner_monthly",
+        "license_monthly"
+      ],
+      "title": "Billing Type"
+    },
+    "entity_id": {
+      "type": "string",
+      "title": "Entity ID (Resident or Partner)"
+    },
+    "amount": {
+      "type": "number",
+      "title": "Amount"
+    },
+    "billing_cycle": {
+      "type": "string",
+      "enum": [
+        "weekly",
+        "monthly",
+        "quarterly"
+      ],
+      "title": "Billing Cycle"
+    },
+    "next_billing_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Billing Date"
+    },
+    "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+    },
+    "auto_send": {
+      "type": "boolean",
+      "title": "Auto Send",
+      "default": false
+    },
+    "organization_id": {
+      "type": "string",
+      "title": "Organization ID"
+    }
+  },
+  "required": [
+    "rule_name",
+    "billing_type",
+    "amount",
+    "billing_cycle",
+    "next_billing_date"
+  ]
+}
