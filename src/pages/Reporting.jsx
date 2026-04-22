@@ -79,7 +79,7 @@ export default function Reporting() {
 
   if (!isInternal) return <AccessDenied message="Reporting is restricted to internal housing staff only." />;
 
-  if (loading) return <div className="flex justify-center py-12"><div className="w-6 h-6 border-3 border-primary/30 border-t-primary rounded-full animate-spin" /></div>;
+  if (loading || !data) return <div className="flex justify-center py-12"><div className="w-6 h-6 border-3 border-primary/30 border-t-primary rounded-full animate-spin" /></div>;
 
   return (
     <div>
