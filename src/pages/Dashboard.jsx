@@ -6,6 +6,7 @@ import PremiumPageHeader from '@/components/PremiumPageHeader';
 import PremiumStatCard from '@/components/PremiumStatCard';
 import HouseCard from '@/components/HouseCard';
 import { Building2, BedDouble, Home, AlertTriangle } from 'lucide-react';
+import RevenueSummaryWidget from '@/components/RevenueSummaryWidget';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -182,6 +183,8 @@ export default function Dashboard() {
               <div className="text-sm text-body-text">Whole-house leases</div>
             </div>
           </div>
+
+          {isInternal && <RevenueSummaryWidget />}
 
           <div>
             <h2 className="text-lg font-bold text-heading mb-4">PROPERTIES</h2>

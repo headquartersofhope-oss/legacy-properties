@@ -4,221 +4,93 @@
   "properties": {
     "invoice_number": {
       "type": "string",
-      "title": "Invoice Number",
-      "description": "Unique invoice identifier"
+      "title": "Invoice Number"
     },
-    "invoice_date": {
-      "type": "string",
-      "format": "date",
-      "title": "Invoice Date"
-    },
-    "billing_period_start": {
-      "type": "string",
-      "format": "date",
-      "title": "Billing Period Start"
-    },
-    "billing_period_end": {
-      "type": "string",
-      "format": "date",
-      "title": "Billing Period End"
-    },
-    "property_id": {
-      "type": "string",
-      "title": "Property ID"
-    },
-    "property_name": {
-      "type": "string",
-      "title": "Property Name"
-    },
-    "room_id": {
-      "type": "string",
-      "title": "Room ID"
-    },
-    "room_name": {
-      "type": "string",
-      "title": "Room Name"
-    },
-    "bed_id": {
-      "type": "string",
-      "title": "Bed ID"
-    },
-    "bed_label": {
-      "type": "string",
-      "title": "Bed Label"
-    },
-    "placement_id": {
-      "type": "string",
-      "title": "Placement ID"
-    },
-    "resident_id": {
-      "type": "string",
-      "title": "Resident ID"
-    },
-    "resident_name": {
-      "type": "string",
-      "title": "Resident Name"
-    },
-    "payment_source_id": {
-      "type": "string",
-      "title": "Payment Source ID"
-    },
-    "payer_name": {
-      "type": "string",
-      "title": "Payer Name"
-    },
-    "payer_type": {
+    "invoice_type": {
       "type": "string",
       "enum": [
-        "self_pay",
-        "nonprofit",
-        "organization",
-        "sponsor",
-        "family",
-        "government",
-        "contract_client",
+        "resident_fee",
+        "partner_fee",
+        "software_license",
+        "va_per_diem",
+        "consulting",
         "other"
       ],
-      "title": "Payer Type"
+      "title": "Invoice Type"
     },
-    "payer_email": {
+    "billed_to_name": {
       "type": "string",
-      "title": "Payer Email"
+      "title": "Billed To Name"
+    },
+    "billed_to_email": {
+      "type": "string",
+      "title": "Billed To Email"
+    },
+    "billed_to_organization": {
+      "type": "string",
+      "title": "Billed To Organization"
     },
     "line_items": {
       "type": "string",
-      "title": "Line Items (JSON)"
+      "title": "Line Items (JSON)",
+      "description": "Array of {description, quantity, unit_price, total}"
     },
     "subtotal": {
       "type": "number",
       "title": "Subtotal"
     },
+    "tax_rate": {
+      "type": "number",
+      "title": "Tax Rate (%)",
+      "default": 0
+    },
     "tax_amount": {
       "type": "number",
       "title": "Tax Amount"
     },
-    "total_amount_due": {
+    "total_amount": {
       "type": "number",
-      "title": "Total Amount Due"
+      "title": "Total Amount"
     },
-    "amount_paid": {
-      "type": "number",
-      "default": 0,
-      "title": "Amount Paid"
-    },
-    "remaining_balance": {
-      "type": "number",
-      "title": "Remaining Balance"
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "sent",
+        "paid",
+        "overdue",
+        "cancelled",
+        "void"
+      ],
+      "default": "draft",
+      "title": "Status"
     },
     "due_date": {
       "type": "string",
       "format": "date",
       "title": "Due Date"
     },
-    "invoice_status": {
+    "paid_date": {
       "type": "string",
-      "enum": [
-        "draft",
-        "sent",
-        "viewed",
-        "partial",
-        "paid",
-        "overdue",
-        "cancelled"
-      ],
-      "title": "Invoice Status"
+      "format": "date",
+      "title": "Paid Date"
     },
-    "document_link": {
+    "payment_method": {
       "type": "string",
-      "title": "Document Link"
+      "title": "Payment Method"
     },
     "notes": {
       "type": "string",
       "title": "Notes"
+    },
+    "organization_id": {
+      "type": "string",
+      "title": "Organization ID"
     }
   },
   "required": [
-    "invoice_number",
-    "invoice_date",
-    "property_id",
-    "total_amount_due",
-    "invoice_status"
-  ],
-  "rls": {
-    "create": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "housing_admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "billing_staff"
-          }
-        }
-      ]
-    },
-    "read": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "housing_admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "billing_staff"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "housing_manager"
-          }
-        }
-      ]
-    },
-    "update": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "housing_admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "billing_staff"
-          }
-        }
-      ]
-    },
-    "delete": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "housing_admin"
-          }
-        }
-      ]
-    }
-  }
+    "billed_to_name",
+    "total_amount",
+    "status"
+  ]
 }

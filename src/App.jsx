@@ -34,6 +34,9 @@ import HousingModels from './pages/HousingModels';
 import PathwayIntegration from './pages/PathwayIntegration';
 import OperationalAudit from './pages/OperationalAudit';
 import TurnkeyDashboard from './pages/TurnkeyDashboard';
+import Billing from './pages/Billing';
+import CreateInvoice from './pages/CreateInvoice';
+import RecurringRules from './pages/RecurringRules';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -57,9 +60,6 @@ const AuthenticatedApp = () => {
 
   return (
     <Routes>
-      <Route element={<PublicLayout />}>
-        <Route path="/public/partner" element={<Dashboard />} />
-      </Route>
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/sites" element={<Sites />} />
@@ -88,6 +88,9 @@ const AuthenticatedApp = () => {
         <Route path="/pathway-integration" element={<PathwayIntegration />} />
         <Route path="/operational-audit" element={<OperationalAudit />} />
         <Route path="/turnkey" element={<TurnkeyDashboard />} />
+        <Route path="/billing" element={<Billing />} />
+        <Route path="/billing/create" element={<CreateInvoice />} />
+        <Route path="/recurring-rules" element={<RecurringRules />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

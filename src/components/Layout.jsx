@@ -5,7 +5,7 @@ import {
   Home, Building2, DoorOpen, BedDouble, FileText, Users, UserCheck,
   ClipboardList, FolderOpen, AlertTriangle, ShieldCheck, DollarSign,
   Building, BarChart3, Settings, Menu, X, LogOut, ChevronRight, Zap, Grid3X3,
-  Send, LayoutGrid, Layers, Network, ArrowRightLeft
+  Send, LayoutGrid, Layers, Network, ArrowRightLeft, RefreshCw
 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
@@ -44,6 +44,13 @@ const internalNav = [
       { label: 'Incidents', path: '/incidents', icon: AlertTriangle },
       { label: 'Compliance', path: '/compliance', icon: ShieldCheck },
       { label: 'Fees', path: '/fees', icon: DollarSign },
+    ]
+  },
+  {
+    section: 'BILLING',
+    items: [
+      { label: 'Invoices', path: '/billing', icon: DollarSign },
+      { label: 'Recurring Rules', path: '/recurring-rules', icon: RefreshCw },
     ]
   },
   {
