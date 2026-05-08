@@ -40,6 +40,10 @@ import RecurringRules from './pages/RecurringRules';
 import MaintenanceRequests from './pages/MaintenanceRequests';
 import LeaseManagement from './pages/LeaseManagement';
 import TenantPortal from './pages/TenantPortal';
+import CRMPipeline from './pages/CRMPipeline';
+import ShowingScheduler from './pages/ShowingScheduler';
+import PLDashboard from './pages/PLDashboard';
+import HouseExpenses from './pages/HouseExpenses';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -97,6 +101,10 @@ const AuthenticatedApp = () => {
         <Route path="/maintenance" element={<MaintenanceRequests />} />
         <Route path="/lease-management" element={<LeaseManagement />} />
         <Route path="/tenant-portal" element={<TenantPortal />} />
+        <Route path="/crm" element={<CRMPipeline />} />
+        <Route path="/showings" element={<ShowingScheduler />} />
+        <Route path="/pl-dashboard" element={<PLDashboard />} />
+        <Route path="/house-expenses" element={<HouseExpenses />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

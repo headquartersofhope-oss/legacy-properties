@@ -1,0 +1,59 @@
+{
+  "name": "PropertyListing",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "title": "Property ID"
+    },
+    "property_name": {
+      "type": "string",
+      "title": "Property Name"
+    },
+    "listing_title": {
+      "type": "string",
+      "title": "Listing Title"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "monthly_rent": {
+      "type": "number",
+      "title": "Monthly Rent ($)"
+    },
+    "beds_available": {
+      "type": "number",
+      "title": "Beds Available"
+    },
+    "listing_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "paused",
+        "filled"
+      ],
+      "default": "draft",
+      "title": "Listing Status"
+    },
+    "amenities": {
+      "type": "string",
+      "title": "Amenities (comma-separated)"
+    },
+    "photo_url": {
+      "type": "string",
+      "title": "Photo URL"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date",
+      "title": "Published Date"
+    }
+  },
+  "required": [
+    "property_name",
+    "listing_title",
+    "listing_status"
+  ]
+}

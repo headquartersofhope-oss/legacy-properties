@@ -1,0 +1,104 @@
+{
+  "name": "Lead",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "title": "First Name"
+    },
+    "last_name": {
+      "type": "string",
+      "title": "Last Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "website",
+        "referral",
+        "social_media",
+        "walk_in",
+        "phone_call",
+        "partner",
+        "other"
+      ],
+      "title": "Lead Source"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "qualified",
+        "showing_scheduled",
+        "application_submitted",
+        "approved",
+        "closed_won",
+        "closed_lost"
+      ],
+      "default": "new",
+      "title": "Pipeline Stage"
+    },
+    "lead_score": {
+      "type": "number",
+      "default": 0,
+      "title": "Lead Score (0-100)"
+    },
+    "property_interest": {
+      "type": "string",
+      "title": "Property Interest"
+    },
+    "budget_min": {
+      "type": "number",
+      "title": "Budget Min ($)"
+    },
+    "budget_max": {
+      "type": "number",
+      "title": "Budget Max ($)"
+    },
+    "move_in_timeline": {
+      "type": "string",
+      "enum": [
+        "immediate",
+        "within_30_days",
+        "1_3_months",
+        "3_6_months",
+        "exploring"
+      ],
+      "title": "Move-in Timeline"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "assigned_to_email": {
+      "type": "string",
+      "title": "Assigned To (Email)"
+    },
+    "assigned_to_name": {
+      "type": "string",
+      "title": "Assigned To"
+    },
+    "last_contacted": {
+      "type": "string",
+      "format": "date",
+      "title": "Last Contacted"
+    },
+    "lost_reason": {
+      "type": "string",
+      "title": "Lost Reason"
+    }
+  },
+  "required": [
+    "first_name",
+    "last_name",
+    "stage"
+  ]
+}

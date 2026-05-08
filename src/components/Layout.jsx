@@ -5,7 +5,8 @@ import {
   Home, Building2, DoorOpen, BedDouble, FileText, Users, UserCheck,
   ClipboardList, FolderOpen, AlertTriangle, ShieldCheck, DollarSign,
   Building, BarChart3, Settings, Menu, X, LogOut, ChevronRight, Zap, Grid3X3,
-  Send, LayoutGrid, Layers, Network, ArrowRightLeft, RefreshCw, Wrench, UserCircle
+  Send, LayoutGrid, Layers, Network, ArrowRightLeft, RefreshCw, Wrench, UserCircle,
+  TrendingUp, Calendar, Receipt, PieChart
 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
@@ -54,10 +55,24 @@ const internalNav = [
     ]
   },
   {
+    section: 'CRM',
+    items: [
+      { label: 'Lead Pipeline', path: '/crm', icon: TrendingUp },
+      { label: 'Showings', path: '/showings', icon: Calendar },
+    ]
+  },
+  {
     section: 'RESIDENT MGMT',
     items: [
       { label: 'Maintenance', path: '/maintenance', icon: Wrench },
       { label: 'Lease Management', path: '/lease-management', icon: FileText },
+    ]
+  },
+  {
+    section: 'FINANCIAL',
+    items: [
+      { label: 'P&L Dashboard', path: '/pl-dashboard', icon: PieChart },
+      { label: 'House Expenses', path: '/house-expenses', icon: Receipt },
     ]
   },
   {

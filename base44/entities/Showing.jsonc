@@ -1,0 +1,82 @@
+{
+  "name": "Showing",
+  "type": "object",
+  "properties": {
+    "lead_id": {
+      "type": "string",
+      "title": "Lead ID"
+    },
+    "lead_name": {
+      "type": "string",
+      "title": "Lead Name"
+    },
+    "lead_email": {
+      "type": "string",
+      "title": "Lead Email"
+    },
+    "property_id": {
+      "type": "string",
+      "title": "Property ID"
+    },
+    "property_name": {
+      "type": "string",
+      "title": "Property Name"
+    },
+    "showing_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+    },
+    "showing_time": {
+      "type": "string",
+      "title": "Time (e.g. 2:00 PM)"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "default": 30,
+      "title": "Duration (min)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "confirmed",
+        "completed",
+        "cancelled",
+        "no_show"
+      ],
+      "default": "scheduled",
+      "title": "Status"
+    },
+    "assigned_staff_name": {
+      "type": "string",
+      "title": "Staff Name"
+    },
+    "assigned_staff_email": {
+      "type": "string",
+      "title": "Staff Email"
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "interested",
+        "not_interested",
+        "applied",
+        "needs_follow_up",
+        "pending"
+      ],
+      "default": "pending",
+      "title": "Outcome"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "lead_name",
+    "property_name",
+    "showing_date",
+    "status"
+  ]
+}
