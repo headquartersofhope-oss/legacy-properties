@@ -13,113 +13,64 @@ import { Button } from "@/components/ui/button";
 import AppAssistant from "@/components/AppAssistant";
 
 const internalNav = [
-  {
-    section: 'OVERVIEW',
-    items: [
-      { label: 'Dashboard', path: '/', icon: Home },
-    ]
-  },
-  {
-    section: 'PROPERTIES',
-    items: [
-      { label: 'Houses', path: '/properties', icon: Building2 },
-      { label: 'Rooms', path: '/rooms', icon: DoorOpen },
-      { label: 'Beds', path: '/beds', icon: BedDouble },
-      { label: 'Leases', path: '/leases', icon: FileText },
-    ]
-  },
-  {
-    section: 'PLACEMENT',
-    items: [
-      { label: 'Referrals', path: '/referrals', icon: Send },
-      { label: 'Applicants', path: '/applicants', icon: Users },
-      { label: 'Residents', path: '/residents', icon: UserCheck },
-      { label: 'Occupancy', path: '/occupancy', icon: ClipboardList },
-      { label: 'Move Requests', path: '/move-requests', icon: ArrowRightLeft },
-    ]
-  },
-  {
-    section: 'OPERATIONS',
-    items: [
-      { label: 'Documents', path: '/documents', icon: FolderOpen },
-      { label: 'Incidents', path: '/incidents', icon: AlertTriangle },
-      { label: 'Compliance', path: '/compliance', icon: ShieldCheck },
-      { label: 'Fees', path: '/fees', icon: DollarSign },
-    ]
-  },
-  {
-    section: 'BILLING',
-    items: [
-      { label: 'Invoices', path: '/billing', icon: DollarSign },
-      { label: 'Recurring Rules', path: '/recurring-rules', icon: RefreshCw },
-    ]
-  },
-  {
-    section: 'CRM',
-    items: [
-      { label: 'Lead Pipeline', path: '/crm', icon: TrendingUp },
-      { label: 'Showings', path: '/showings', icon: Calendar },
-    ]
-  },
-  {
-    section: 'RESIDENT MGMT',
-    items: [
-      { label: 'Maintenance', path: '/maintenance', icon: Wrench },
-      { label: 'Lease Management', path: '/lease-management', icon: FileText },
-    ]
-  },
-  {
-    section: 'FINANCIAL',
-    items: [
-      { label: 'P&L Dashboard', path: '/pl-dashboard', icon: PieChart },
-      { label: 'House Expenses', path: '/house-expenses', icon: Receipt },
-    ]
-  },
-  {
-    section: 'INTELLIGENCE',
-    items: [
-      { label: 'Reporting', path: '/reporting', icon: BarChart3 },
-      { label: 'Diagnostics', path: '/diagnostics', icon: Zap },
-      { label: 'Housing Models', path: '/housing-models', icon: Layers },
-      { label: 'Integration Readiness', path: '/integration-readiness', icon: Network },
-    ]
-  },
-  {
-    section: 'SYSTEM',
-    items: [
-      { label: 'Settings', path: '/settings', icon: Settings },
-    ]
-  },
+  { section: 'OVERVIEW', items: [{ label: 'Dashboard', path: '/', icon: Home }] },
+  { section: 'PROPERTIES', items: [
+    { label: 'Houses', path: '/properties', icon: Building2 },
+    { label: 'Rooms', path: '/rooms', icon: DoorOpen },
+    { label: 'Beds', path: '/beds', icon: BedDouble },
+    { label: 'Leases', path: '/leases', icon: FileText },
+  ]},
+  { section: 'PLACEMENT', items: [
+    { label: 'Referrals', path: '/referrals', icon: Send },
+    { label: 'Applicants', path: '/applicants', icon: Users },
+    { label: 'Residents', path: '/residents', icon: UserCheck },
+    { label: 'Occupancy', path: '/occupancy', icon: ClipboardList },
+    { label: 'Move Requests', path: '/move-requests', icon: ArrowRightLeft },
+  ]},
+  { section: 'OPERATIONS', items: [
+    { label: 'Documents', path: '/documents', icon: FolderOpen },
+    { label: 'Incidents', path: '/incidents', icon: AlertTriangle },
+    { label: 'Compliance', path: '/compliance', icon: ShieldCheck },
+    { label: 'Fees', path: '/fees', icon: DollarSign },
+  ]},
+  { section: 'BILLING', items: [
+    { label: 'Invoices', path: '/billing', icon: DollarSign },
+    { label: 'Recurring Rules', path: '/recurring-rules', icon: RefreshCw },
+  ]},
+  { section: 'CRM', items: [
+    { label: 'Lead Pipeline', path: '/crm', icon: TrendingUp },
+    { label: 'Showings', path: '/showings', icon: Calendar },
+  ]},
+  { section: 'RESIDENT MGMT', items: [
+    { label: 'Maintenance', path: '/maintenance', icon: Wrench },
+    { label: 'Lease Management', path: '/lease-management', icon: FileText },
+  ]},
+  { section: 'FINANCIAL', items: [
+    { label: 'P&L Dashboard', path: '/pl-dashboard', icon: PieChart },
+    { label: 'House Expenses', path: '/house-expenses', icon: Receipt },
+  ]},
+  { section: 'INTELLIGENCE', items: [
+    { label: 'Reporting', path: '/reporting', icon: BarChart3 },
+    { label: 'Diagnostics', path: '/diagnostics', icon: Zap },
+    { label: 'Housing Models', path: '/housing-models', icon: Layers },
+    { label: 'Integration Readiness', path: '/integration-readiness', icon: Network },
+  ]},
+  { section: 'SYSTEM', items: [{ label: 'Settings', path: '/settings', icon: Settings }] },
 ];
 
-const partnerNav = [
-  {
-    section: 'PLACEMENT',
-    items: [
-      { label: 'Bed Search', path: '/bed-search', icon: LayoutGrid },
-      { label: 'Availability', path: '/availability', icon: BedDouble },
-    ]
-  },
-];
+const partnerNav = [{ section: 'PLACEMENT', items: [
+  { label: 'Bed Search', path: '/bed-search', icon: LayoutGrid },
+  { label: 'Availability', path: '/availability', icon: BedDouble },
+]}];
 
-const tenantNav = [
-  {
-    section: 'MY PORTAL',
-    items: [
-      { label: 'My Portal', path: '/tenant-portal', icon: UserCircle },
-      { label: 'Maintenance', path: '/maintenance', icon: Wrench },
-    ]
-  },
-];
+const tenantNav = [{ section: 'MY PORTAL', items: [
+  { label: 'My Portal', path: '/tenant-portal', icon: UserCircle },
+  { label: 'Maintenance', path: '/maintenance', icon: Wrench },
+]}];
 
-const turnkeyNav = [
-  {
-    section: 'MY HOUSE',
-    items: [
-      { label: 'House Dashboard', path: '/turnkey', icon: Home },
-    ]
-  },
-];
+const turnkeyNav = [{ section: 'MY HOUSE', items: [
+  { label: 'House Dashboard', path: '/turnkey', icon: Home },
+]}];
 
 export default function Layout() {
   const { user, loading, isInternal, isPartner, isTurnkeyOperator } = useCurrentUser();
@@ -134,26 +85,22 @@ export default function Layout() {
     );
   }
 
-  // Security: only show nav items the user's role is entitled to.
-  // Unknown / unauthenticated roles get an empty nav.
   const isTenant = user?.role === "tenant";
   const filteredNav = isTurnkeyOperator ? turnkeyNav : (isTenant ? tenantNav : (isPartner ? partnerNav : (isInternal ? internalNav : [])));
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
-      {/* Mobile overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
       )}
 
-      {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-sidebar text-sidebar-foreground flex flex-col transition-transform duration-200 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border bg-gradient-to-r from-primary/10 to-transparent">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center font-bold text-sm">
-            LP
+            RP
           </div>
           <div>
-            <h1 className="text-sm font-bold text-primary">Legacy Properties</h1>
+            <h1 className="text-sm font-bold text-primary">REJG Legacy Properties</h1>
             <p className="text-[11px] text-sidebar-foreground/60">{isTurnkeyOperator ? 'Operator Portal' : isPartner ? 'Partner Portal' : 'Operations'}</p>
           </div>
           <button className="lg:hidden ml-auto" onClick={() => setSidebarOpen(false)}>
@@ -208,20 +155,18 @@ export default function Layout() {
         </div>
       </aside>
 
-      {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-border bg-card">
           <button onClick={() => setSidebarOpen(true)}>
             <Menu className="w-5 h-5" />
           </button>
-          <span className="text-sm font-semibold">Housing Ops</span>
+          <span className="text-sm font-semibold">REJG Legacy Properties</span>
         </header>
         <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
           <Outlet />
         </main>
       </div>
 
-      {/* App Assistant (internal users only) */}
       {isInternal && <AppAssistant />}
     </div>
   );
