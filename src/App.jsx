@@ -6,7 +6,6 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import Layout from './components/Layout';
-import PublicLayout from './components/PublicLayout';
 import Dashboard from './pages/Dashboard';
 import Sites from './pages/Sites';
 import Rooms from './pages/Rooms.jsx';
@@ -44,25 +43,26 @@ import CRMPipeline from './pages/CRMPipeline';
 import ShowingScheduler from './pages/ShowingScheduler';
 import PLDashboard from './pages/PLDashboard';
 import HouseExpenses from './pages/HouseExpenses';
+import PartnerPortal from './pages/PartnerPortal';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div>
+      <div style={{ position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a1628' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ width: 40, height: 40, border: '3px solid rgba(212,175,55,0.2)', borderTopColor: '#d4af37', borderRadius: '50%', animation: 'spin 0.8s linear infinite', margin: '0 auto 16px' }} />
+          <p style={{ color: '#94a3b8', fontSize: 13 }}>Loading REJG Legacy Properties...</p>
+        </div>
+        <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
       </div>
     );
   }
 
   if (authError) {
-    if (authError.type === 'user_not_registered') {
-      return <UserNotRegisteredError />;
-    } else if (authError.type === 'auth_required') {
-      navigateToLogin();
-      return null;
-    }
+    if (authError.type === 'user_not_registered') return <UserNotRegisteredError />;
+    if (authError.type === 'auth_required') { navigateToLogin(); return null; }
   }
 
   return (
@@ -105,6 +105,7 @@ const AuthenticatedApp = () => {
         <Route path="/showings" element={<ShowingScheduler />} />
         <Route path="/pl-dashboard" element={<PLDashboard />} />
         <Route path="/house-expenses" element={<HouseExpenses />} />
+        <Route path="/partner-portal" element={<PartnerPortal />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
@@ -121,7 +122,7 @@ function App() {
         <Toaster />
       </QueryClientProvider>
     </AuthProvider>
-  )
+  );
 }
 
 export default App
